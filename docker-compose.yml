@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  rail-bdms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rail_bdms_app
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - HOST=0.0.0.0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/overview/kpis"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
