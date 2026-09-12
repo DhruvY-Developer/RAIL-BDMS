@@ -152,6 +152,7 @@ def generate_canonical_assets() -> List[CanonicalAsset]:
     return assets
 
 def generate_maintenance_tasks(assets: List[CanonicalAsset]) -> List[MaintenanceTask]:
+    random.seed(42)
     tasks: List[MaintenanceTask] = []
     
     # Task Templates by Department
@@ -179,7 +180,7 @@ def generate_maintenance_tasks(assets: List[CanonicalAsset]) -> List[Maintenance
     # 1. Engineering Tasks (TMS)
     for asset in [a for a in assets if a.department == DepartmentEnum.ENGINEERING]:
         tmpl = random.choice(tms_templates)
-        due_days = random.randint(-5, 14) # Some overdue
+        due_days = random.randint(-5, -1) if "IMR" in tmpl["type"] else random.choice([-3, -1, 0, 1, 2, 4, 6, 8, 12, 16, 21, 27])
         due_dt = now + timedelta(days=due_days)
         tasks.append(MaintenanceTask(
             source_system=SourceSystemEnum.TMS,
@@ -207,7 +208,7 @@ def generate_maintenance_tasks(assets: List[CanonicalAsset]) -> List[Maintenance
     # 2. S&T Tasks (SMMS)
     for asset in [a for a in assets if a.department == DepartmentEnum.S_AND_T]:
         tmpl = random.choice(smms_templates)
-        due_days = random.randint(-3, 10)
+        due_days = random.choice([-4, -2, 0, 1, 3, 5, 7, 10, 15, 19, 24, 28])
         due_dt = now + timedelta(days=due_days)
         tasks.append(MaintenanceTask(
             source_system=SourceSystemEnum.SMMS,
@@ -235,7 +236,7 @@ def generate_maintenance_tasks(assets: List[CanonicalAsset]) -> List[Maintenance
     # 3. TRD / Electrical Tasks (TDMS)
     for asset in [a for a in assets if a.department == DepartmentEnum.TRD]:
         tmpl = random.choice(tdms_templates)
-        due_days = random.randint(-2, 18)
+        due_days = random.choice([-3, -1, 0, 2, 4, 6, 8, 11, 14, 18, 23, 29])
         due_dt = now + timedelta(days=due_days)
         tasks.append(MaintenanceTask(
             source_system=SourceSystemEnum.TDMS,
@@ -262,9 +263,10 @@ def generate_maintenance_tasks(assets: List[CanonicalAsset]) -> List[Maintenance
 
     return tasks
 
-def generate_train_movements() -> List[TrainMovement]:
+def generate_train_movements(days: int = 1, start_offset_days: int = 0) -> List[TrainMovement]:
     """
-    Generates realistic timetable train movements in relative horizon minutes (0 to 1440 min = 24hr day)
+    Generates realistic timetable train movements in relative horizon minutes (0 to 1440 min per day).
+    Supports multi-day scheduling across 24-hour, 7-day, and 30-day planning horizons.
     """
     trains: List[TrainMovement] = []
     
@@ -297,52 +299,58 @@ def generate_train_movements() -> List[TrainMovement]:
         {"num": "CONT-332", "name": "Inbound ICD Container (JNPT-TKD)", "type": TrainTypeEnum.CONTAINER_FREIGHT, "prio": 4, "speed": 100, "origin": "PWL", "dest": "TKD", "line": LineOrRoadEnum.UP, "base_min": 1080}, # 18:00
     ]
 
-    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    base_midnight = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
 
-    for t_tmpl in TRAIN_TEMPLATES:
-        # Generate block timings across all sections in the corridor
-        base_time = t_tmpl["base_min"]
-        
-        # Traverse sections in order
-        sec_list = SECTIONS if t_tmpl["line"] == LineOrRoadEnum.DOWN else list(reversed(SECTIONS))
-        curr_time = base_time
-        
-        for sec in sec_list:
-            km_dist = abs(sec["end_km"] - sec["start_km"])
-            transit_min = max(4, int(round((km_dist / t_tmpl["speed"]) * 60)))
-            
-            entry_m = curr_time
-            exit_m = curr_time + transit_min
-            
-            entry_dt = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(minutes=entry_m)
-            exit_dt = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(minutes=exit_m)
+    for d in range(days):
+        day_idx = start_offset_days + d
+        day_date = base_midnight + timedelta(days=day_idx)
+        today_str = day_date.strftime("%Y-%m-%d")
 
-            trains.append(TrainMovement(
-                train_number=t_tmpl["num"],
-                train_name=t_tmpl["name"],
-                service_date=today_str,
-                train_type=t_tmpl["type"],
-                origin=t_tmpl["origin"],
-                destination=t_tmpl["dest"],
-                section_id=sec["id"],
-                line_or_road=t_tmpl["line"],
-                planned_entry=entry_dt.isoformat(),
-                planned_exit=exit_dt.isoformat(),
-                entry_minute=entry_m,
-                exit_minute=exit_m,
-                min_clearance_before_min=15,
-                min_clearance_after_min=15,
-                priority_class=t_tmpl["prio"],
-                speed_kmh=t_tmpl["speed"]
-            ))
+        for t_tmpl in TRAIN_TEMPLATES:
+            # Generate block timings across all sections in the corridor
+            base_time = t_tmpl["base_min"]
             
-            curr_time += transit_min + 2 # 2 min inter-station headway
+            # Traverse sections in order
+            sec_list = SECTIONS if t_tmpl["line"] == LineOrRoadEnum.DOWN else list(reversed(SECTIONS))
+            curr_time = base_time
+            
+            for sec in sec_list:
+                km_dist = abs(sec["end_km"] - sec["start_km"])
+                transit_min = max(4, int(round((km_dist / t_tmpl["speed"]) * 60)))
+                
+                entry_m = curr_time
+                exit_m = curr_time + transit_min
+                
+                entry_dt = day_date + timedelta(minutes=entry_m)
+                exit_dt = day_date + timedelta(minutes=exit_m)
+
+                trains.append(TrainMovement(
+                    train_number=f"{t_tmpl['num']}{f'-D{day_idx}' if day_idx > 0 else ''}",
+                    train_name=t_tmpl["name"],
+                    service_date=today_str,
+                    train_type=t_tmpl["type"],
+                    origin=t_tmpl["origin"],
+                    destination=t_tmpl["dest"],
+                    section_id=sec["id"],
+                    line_or_road=t_tmpl["line"],
+                    planned_entry=entry_dt.isoformat(),
+                    planned_exit=exit_dt.isoformat(),
+                    entry_minute=entry_m,
+                    exit_minute=exit_m,
+                    min_clearance_before_min=15,
+                    min_clearance_after_min=15,
+                    priority_class=t_tmpl["prio"],
+                    speed_kmh=t_tmpl["speed"]
+                ))
+                
+                curr_time += transit_min + 2 # 2 min inter-station headway
 
     return trains
 
-def generate_corridor_windows() -> List[CorridorWindow]:
+def generate_corridor_windows(days: int = 1, start_offset_days: int = 0) -> List[CorridorWindow]:
     """
-    Candidate standard maintenance windows (e.g. Night corridor 00:30-04:30 and Mid-day lull 11:30-14:00)
+    Candidate standard maintenance windows (e.g. Night corridor 00:30-04:30 and Mid-day lull 11:30-14:00).
+    Supports multi-day generation with temporal day offsets.
     """
     windows: List[CorridorWindow] = []
     
@@ -352,25 +360,30 @@ def generate_corridor_windows() -> List[CorridorWindow]:
         {"start_m": 1290, "end_m": 1410, "label": "Late Evening Window (21:30 - 23:30)"}, # 120 min
     ]
     
-    base_dt = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    base_midnight = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
     
-    for sec in SECTIONS:
-        for line in [LineOrRoadEnum.UP, LineOrRoadEnum.DOWN]:
-            for slot in CANDIDATE_SLOTS:
-                s_dt = base_dt + timedelta(minutes=slot["start_m"])
-                e_dt = base_dt + timedelta(minutes=slot["end_m"])
-                windows.append(CorridorWindow(
-                    section_id=sec["id"],
-                    line_or_road=line,
-                    window_start=s_dt.isoformat(),
-                    window_end=e_dt.isoformat(),
-                    start_minute=slot["start_m"],
-                    end_minute=slot["end_m"],
-                    available_duration_min=slot["end_m"] - slot["start_m"],
-                    allowed_block_type="MULTI_DEPARTMENT",
-                    timetable_version="WTT-NR-2026-V2"
-                ))
-                
+    for d in range(days):
+        day_idx = start_offset_days + d
+        day_date = base_midnight + timedelta(days=day_idx)
+
+        for sec in SECTIONS:
+            for line in [LineOrRoadEnum.UP, LineOrRoadEnum.DOWN]:
+                for slot in CANDIDATE_SLOTS:
+                    s_dt = day_date + timedelta(minutes=slot["start_m"])
+                    e_dt = day_date + timedelta(minutes=slot["end_m"])
+                    windows.append(CorridorWindow(
+                        corridor_window_id=f"CW-{sec['id']}-{line.value}-D{day_idx}-{slot['start_m']}",
+                        section_id=sec["id"],
+                        line_or_road=line,
+                        window_start=s_dt.isoformat(),
+                        window_end=e_dt.isoformat(),
+                        start_minute=slot["start_m"],
+                        end_minute=slot["end_m"],
+                        available_duration_min=slot["end_m"] - slot["start_m"],
+                        allowed_block_type="MULTI_DEPARTMENT",
+                        timetable_version="WTT-NR-2026-V2"
+                    ))
+                    
     return windows
 
 def generate_raw_demands_for_reconciliation(assets: List[CanonicalAsset]) -> List[RawAssetDemand]:

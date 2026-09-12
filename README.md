@@ -184,16 +184,37 @@ Access at [http://localhost:8000](http://localhost:8000).
 
 ## ☁️ Cloud Deployment
 
-### Deploy on Render (1-Click)
-1. Push changes to GitHub.
-2. Sign in to [render.com](https://render.com).
-3. Select **New Web Service** $\to$ connect `DhruvY-Developer/RAIL-BDMS`.
-4. Render automatically detects `render.yaml` and launches your service.
+### Deploy on Render
+
+#### Option A: 1-Click Blueprint (Recommended)
+1. Push your repository to GitHub.
+2. Go to the [Render Dashboard](https://dashboard.render.com).
+3. Click **New +** $\to$ **Blueprint**.
+4. Connect your repository (`RAIL-BDMS`).
+5. Render detects [`render.yaml`](file:///render.yaml) automatically:
+   - **Runtime**: Python 3.11.8
+   - **Build Command**: `python -m pip install --upgrade pip && pip install -r requirements.txt`
+   - **Start Command**: `uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`
+   - **Health Check**: `/health`
+6. Click **Apply** to launch the service.
+
+#### Option B: Manual Web Service Setup
+If creating a service manually in the Render dashboard:
+- **Runtime**: `Python`
+- **Build Command**: `python -m pip install --upgrade pip && pip install -r requirements.txt`
+- **Start Command**: `uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`
+- **Advanced $\to$ Health Check Path**: `/health`
+- **Advanced $\to$ Environment Variables**:
+  - `PYTHON_VERSION` = `3.11.8`
+  - `PYTHONPATH` = `.`
+
+#### Option C: Docker on Render
+- Choose **Docker** as runtime in Render; it will automatically build using [`Dockerfile`](file:///Dockerfile) and respect [`dockerignore`](file:///.dockerignore).
 
 ### Deploy on Railway
 1. Sign in to [railway.app](https://railway.app).
 2. Select **New Project** $\to$ **Deploy from GitHub Repo**.
-3. Select `RAIL-BDMS` — deployment triggers automatically using `Procfile`.
+3. Select `RAIL-BDMS` — deployment triggers automatically using [`Procfile`](file:///Procfile).
 
 ---
 

@@ -1,48 +1,350 @@
-/* Rail-BDMS Command Center Custom Styles */
+/* Rail-BDMS Command Center Custom Styles - RailOne-Inspired Theme System */
 
 :root {
-  --rail-dark: #0a0d14;
-  --rail-card: #111726;
-  --rail-card-hover: #161f33;
-  --rail-border: #1f293d;
-  --rail-accent: #3b82f6;
-  --rail-shadow: #8b5cf6;
+  /* RailOne-Inspired Indian Railway Light Theme Tokens */
+  --primary: #C62828;              /* Railway Crimson / Red */
+  --primary-dark: #A61B1B;         /* Deep Crimson */
+  --primary-light: #FDECEC;        /* Soft Crimson Tint */
+  --primary-glow: rgba(198, 40, 40, 0.18);
+  --accent: #E8752D;               /* Warm Orange */
+  --accent-light: #FFF4EC;         /* Soft Orange Tint */
+
+  --background: #F7F8FA;           /* Clean crisp light neutral background */
+  --surface: #FFFFFF;              /* Pure white surface */
+  --surface-secondary: #F0F2F5;    /* Soft neutral card/hover surface */
+  --surface-elevated: #FFFFFF;     /* Elevated popover/tooltip surface */
+
+  --text-primary: #1F2933;         /* High-contrast charcoal text */
+  --text-secondary: #667085;       /* Muted slate text */
+  --text-muted: #98A2B3;           /* Subdued caption text */
+
+  --border: #E4E7EC;               /* Crisp light neutral border */
+  --border-subtle: #F0F2F5;        /* Very light separator */
+
+  --card-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.04);
+  --modal-backdrop: rgba(15, 23, 42, 0.5);
+
+  /* Semantic Department Identifiers (RailOne / Indian Railways) */
+  --dept-tms: #C62828;             /* TMS Civil Track = Railway Crimson */
+  --dept-smms: #10B981;            /* SMMS Signalling = Safety Green */
+  --dept-tdms: #E8752D;            /* TDMS Traction OHE = Warm Orange */
+  --dept-shadow: #8B5CF6;          /* Shadow Co-possession = Purple */
 }
 
+.dark {
+  /* RailOne-Inspired Indian Railway Dark Theme Tokens (Neutral Dark Gray, NOT navy blue) */
+  --primary: #E04B4B;              /* Crimson Red Accent */
+  --primary-dark: #C62828;         /* Deep Crimson */
+  --primary-light: #3A1F21;        /* Dark Crimson Tint */
+  --primary-glow: rgba(224, 75, 75, 0.22);
+  --accent: #F28A45;               /* Warm Orange Accent */
+  --accent-light: #3A2318;         /* Dark Orange Tint */
+
+  --background: #111315;           /* Neutral dark charcoal background (zero navy blue) */
+  --surface: #181B1F;              /* Dark neutral surface */
+  --surface-secondary: #20242A;    /* Secondary dark neutral surface */
+  --surface-elevated: #262B33;     /* Elevated popover/tooltip surface */
+
+  --text-primary: #F5F7FA;         /* Crisp light primary text */
+  --text-secondary: #B8C0CC;       /* Muted light text */
+  --text-muted: #858E9B;           /* Subdued dark text */
+
+  --border: #30353D;               /* Neutral dark border */
+  --border-subtle: #252A32;        /* Subtle dark separator */
+
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  --modal-backdrop: rgba(5, 8, 15, 0.85);
+
+  /* Semantic Department Identifiers (Dark Mode) */
+  --dept-tms: #E04B4B;             /* TMS Civil Track = Crimson */
+  --dept-smms: #10B981;            /* SMMS Signalling = Green */
+  --dept-tdms: #F28A45;            /* TDMS Traction OHE = Warm Orange */
+  --dept-shadow: #A78BFA;          /* Shadow Co-possession = Purple */
+}
+
+/* Global Body Styling */
 body {
-  background-color: var(--rail-dark);
+  background-color: var(--background);
+  color: var(--text-primary);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.05) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(198, 40, 40, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(232, 117, 45, 0.03) 0px, transparent 50%);
   background-attachment: fixed;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Tab Navigation */
+.dark body {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(224, 75, 75, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(242, 138, 69, 0.04) 0px, transparent 50%);
+}
+
+/* Tab Navigation & Vertical Sidebar Items */
 .nav-tab {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.875rem;
-  border-radius: 0.5rem;
+  gap: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.625rem;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #94a3b8;
+  color: var(--text-secondary);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid transparent;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  user-select: none;
 }
 
 .nav-tab:hover {
-  color: #f1f5f9;
-  background-color: rgba(30, 41, 59, 0.5);
-  border-color: rgba(51, 65, 85, 0.5);
+  color: var(--text-primary);
+  background-color: var(--surface-secondary);
+  border-color: var(--border);
+  transform: translateX(2px);
 }
 
 .nav-tab.active {
-  color: #60a5fa;
-  background-color: rgba(59, 130, 246, 0.12);
-  border-color: rgba(59, 130, 246, 0.35);
+  color: var(--primary);
+  background-color: var(--primary-light);
+  border-color: var(--primary-glow);
   font-weight: 600;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 16px var(--primary-glow);
+}
+
+.nav-tab.active::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 18%;
+  bottom: 18%;
+  width: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, var(--primary), var(--accent));
+  box-shadow: 0 0 8px var(--primary);
+}
+
+/* Sidebar Specific Layout & Accordion Styling */
+.app-sidebar {
+  width: 260px;
+  min-width: 260px;
+  max-width: 260px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+  z-index: 40;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              min-width 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.2s ease,
+              border-color 0.2s ease;
+  overflow: hidden;
+}
+
+/* Collapsed Sidebar State */
+.sidebar-collapsed {
+  width: 74px !important;
+  min-width: 74px !important;
+  max-width: 74px !important;
+}
+
+.sidebar-collapsed .sidebar-hide-on-collapse {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  display: none !important;
+}
+
+.sidebar-collapsed .nav-tab {
+  padding: 0.625rem 0;
+  justify-content: center;
+}
+
+.sidebar-collapsed .nav-tab:hover {
+  transform: none;
+}
+
+.sidebar-collapsed .nav-tab::before {
+  left: 2px;
+}
+
+.sidebar-collapsed .sidebar-accordion-trigger {
+  padding: 0.625rem 0;
+  justify-content: center;
+}
+
+.sidebar-collapsed .sidebar-submenu {
+  display: none !important;
+}
+
+.sidebar-collapsed .sidebar-header {
+  justify-content: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.sidebar-collapsed .sidebar-footer {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  justify-content: center;
+}
+
+/* Tooltip Popovers for Collapsed State */
+.sidebar-collapsed [data-tooltip] {
+  position: relative;
+}
+
+.sidebar-collapsed [data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 5px 11px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 12px var(--primary-glow);
+  z-index: 100;
+}
+
+.sidebar-collapsed [data-tooltip]:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(2px);
+}
+
+/* Accordion Submenu Styling */
+.sidebar-accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: transparent;
+}
+
+.sidebar-accordion-trigger:hover {
+  color: var(--text-primary);
+  background-color: var(--surface-secondary);
+}
+
+.sidebar-accordion.has-active-child > .sidebar-accordion-trigger {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.sidebar-chevron {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text-muted);
+}
+
+.sidebar-accordion.open > .sidebar-accordion-trigger .sidebar-chevron {
+  transform: rotate(180deg);
+  color: var(--text-secondary);
+}
+
+.sidebar-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-left: 0.875rem;
+  margin-left: 1.125rem;
+  border-left: 1px solid var(--border);
+  margin-top: 0.25rem;
+}
+
+.sidebar-accordion.open > .sidebar-submenu {
+  max-height: 320px;
+  opacity: 1;
+}
+
+.sidebar-submenu .nav-tab {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.775rem;
+}
+
+/* Category Section Headings */
+.sidebar-category-header {
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0.75rem 0.875rem 0.35rem;
+}
+
+/* Theme Toggle Button in Header */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 0.5rem;
+  background-color: var(--surface-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+/* Mobile Drawer Overlay */
+@media (max-width: 768px) {
+  .app-sidebar {
+    position: fixed !important;
+    inset-block: 0;
+    left: 0;
+    transform: translateX(-100%);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.85);
+    z-index: 60;
+  }
+
+  .app-sidebar.sidebar-mobile-open {
+    transform: translateX(0);
+  }
 }
 
 /* View Panels */
@@ -62,21 +364,21 @@ body {
 
 /* Dashboard Cards & Panels */
 .kpi-card {
-  background-color: rgba(17, 23, 38, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--rail-border);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 1rem;
   padding: 1.25rem;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .dashboard-panel {
-  background-color: rgba(17, 23, 38, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--rail-border);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 1rem;
   padding: 1.25rem;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 /* Custom Scrollbars */
@@ -85,34 +387,175 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--surface-secondary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: var(--border);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: var(--text-muted);
 }
 
-/* Gantt Chart Custom Layout */
+/* ==================== GANTT CHART OPERATIONAL CONTROL LAYOUT ==================== */
+:root {
+  --gantt-subgrid: rgba(148, 163, 184, 0.06);
+}
+
+html.dark {
+  --gantt-subgrid: rgba(148, 163, 184, 0.05);
+}
+
+html:not(.dark) {
+  --gantt-subgrid: rgba(100, 116, 139, 0.08);
+}
+
 .gantt-grid {
   display: grid;
-  grid-template-columns: 140px repeat(24, 80px);
-  min-width: 2060px;
+  grid-template-columns: 190px repeat(24, 80px);
+  min-width: 2110px;
 }
 
+/* Sticky Timeline Header Ruler */
+.gantt-header-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Top-Left Pinned Intersection Corner */
+.gantt-header-corner {
+  position: sticky;
+  left: 0;
+  top: 0;
+  z-index: 40;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+}
+
+/* Fixed/Sticky Left Metadata Column */
+.gantt-section-meta {
+  position: sticky;
+  left: 0;
+  z-index: 20;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+  box-shadow: 2px 0 6px -2px rgba(0, 0, 0, 0.15);
+}
+
+/* Operational Track Section Row */
+.gantt-row {
+  min-height: 74px;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.15s ease;
+}
+
+.gantt-row:hover {
+  background-color: rgba(148, 163, 184, 0.04);
+}
+
+/* Hour Grid Cell with 15-Minute Subdivisions */
 .gantt-hour-cell {
-  border-right: 1px solid rgba(51, 65, 85, 0.4);
+  border-right: 1px solid var(--border);
   height: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent,
+    transparent 19px,
+    var(--gantt-subgrid) 19px,
+    var(--gantt-subgrid) 20px
+  );
 }
 
+/* 15-Minute Headway Protection Envelope Capsule */
+.gantt-envelope {
+  position: absolute;
+  height: 28px;
+  top: 4px;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px dashed rgba(96, 165, 250, 0.45);
+  box-shadow: inset 0 0 12px rgba(59, 130, 246, 0.08);
+  z-index: 5;
+  pointer-events: auto;
+  cursor: help;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gantt-envelope:hover {
+  background: rgba(59, 130, 246, 0.18);
+  border-color: rgba(96, 165, 250, 0.75);
+  box-shadow: inset 0 0 16px rgba(59, 130, 246, 0.14);
+}
+
+/* Subtle visual safety boundary handles at beginning and end of envelope */
+.gantt-envelope::before,
+.gantt-envelope::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: rgba(96, 165, 250, 0.55);
+  border-radius: 1px;
+}
+
+.gantt-envelope::before {
+  left: 2px;
+}
+
+.gantt-envelope::after {
+  right: 2px;
+}
+
+html:not(.dark) .gantt-envelope {
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px dashed rgba(37, 99, 235, 0.4);
+}
+
+html:not(.dark) .gantt-envelope:hover {
+  background: rgba(59, 130, 246, 0.14);
+  border-color: rgba(37, 99, 235, 0.7);
+}
+
+/* Train Paths in Gantt (Upper Tier) */
+.gantt-train-item {
+  position: absolute;
+  height: 22px;
+  top: 7px;
+  border-radius: 4px;
+  padding: 0 6px;
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.gantt-train-item:hover {
+  transform: translateY(-2px) scale(1.03);
+  z-index: 25;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* Scheduled Maintenance Possession Blocks (Lower Tier) */
 .gantt-block-item {
   position: absolute;
-  height: 32px;
-  border-radius: 6px;
+  height: 26px;
+  top: 38px;
+  border-radius: 5px;
   padding: 2px 8px;
-  font-size: 11px;
+  font-size: 10px;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 600;
   display: flex;
@@ -123,57 +566,45 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   z-index: 10;
 }
 
 .gantt-block-item:hover {
   transform: translateY(-2px) scale(1.02);
-  z-index: 30;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
-}
-
-/* Train paths in Gantt */
-.gantt-train-item {
-  position: absolute;
-  height: 22px;
-  border-radius: 4px;
-  padding: 0 6px;
-  font-size: 10px;
-  font-family: 'JetBrains Mono', monospace;
-  display: flex;
-  align-items: center;
-  opacity: 0.9;
-  z-index: 5;
+  z-index: 25;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 /* State Stepper Button */
 .state-step-btn {
   padding: 0.875rem 0.5rem;
   border-radius: 0.75rem;
-  background-color: rgba(15, 23, 42, 0.6);
-  border: 1px solid var(--rail-border);
+  background-color: var(--surface-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .state-step-btn:hover {
-  background-color: rgba(30, 41, 59, 0.8);
-  border-color: #3b82f6;
+  background-color: var(--surface);
+  border-color: var(--primary);
   transform: translateY(-2px);
 }
 
 .state-step-btn.active {
-  background-color: rgba(59, 130, 246, 0.15);
-  border-color: #3b82f6;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 12px var(--primary-glow);
 }
 
 /* Modal Backdrops */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(5, 8, 15, 0.85);
+  background-color: var(--modal-backdrop);
   backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
@@ -185,6 +616,9 @@ body {
 
 .modal-content {
   animation: scaleIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
 }
 
 @keyframes scaleIn {
@@ -194,73 +628,70 @@ body {
 
 /* Leaflet Map overrides */
 .leaflet-container {
-  background-color: #0c101b !important;
+  background-color: var(--surface) !important;
   font-family: 'Inter', sans-serif !important;
 }
 
 .leaflet-popup-content-wrapper {
-  background-color: #111726 !important;
-  color: #f1f5f9 !important;
-  border: 1px solid #1f293d !important;
+  background-color: var(--surface) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 0.75rem !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7) !important;
+  box-shadow: var(--card-shadow) !important;
 }
 
 .leaflet-popup-tip {
-  background-color: #111726 !important;
+  background-color: var(--surface) !important;
 }
 
 /* ==================== Login Portal & Authentication Styles ==================== */
 .login-portal-bg {
-  background-color: #080c14;
+  background-color: var(--background);
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.10) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 55%),
-    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    radial-gradient(circle at 15% 15%, rgba(198, 40, 40, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(232, 117, 45, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.04) 0%, transparent 55%),
+    linear-gradient(rgba(128, 128, 128, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128, 128, 128, 0.05) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
   background-position: center;
 }
 
 .login-card {
-  background: rgba(15, 23, 42, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(59, 130, 246, 0.25);
+  background: var(--surface);
+  border: 1px solid var(--border);
   box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.85),
-    0 0 40px -10px rgba(59, 130, 246, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 35px -10px var(--primary-glow);
   border-radius: 1.5rem;
   transition: all 0.3s ease;
+  color: var(--text-primary);
 }
 
 .login-card:hover {
-  border-color: rgba(59, 130, 246, 0.4);
+  border-color: var(--primary);
   box-shadow: 
-    0 30px 60px -12px rgba(0, 0, 0, 0.9),
-    0 0 50px -10px rgba(59, 130, 246, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 30px 60px -12px rgba(0, 0, 0, 0.35),
+    0 0 45px -10px var(--primary-glow);
 }
 
 .login-input {
-  background-color: rgba(10, 15, 29, 0.85);
-  border: 1px solid rgba(51, 65, 85, 0.6);
-  color: #f8fafc;
+  background-color: var(--surface-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
   font-family: 'JetBrains Mono', monospace;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .login-input:focus {
-  background-color: rgba(13, 20, 39, 0.95);
-  border-color: #3b82f6;
+  background-color: var(--surface);
+  border-color: var(--primary);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25), 0 0 15px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 3px var(--primary-glow), 0 0 15px var(--primary-glow);
 }
 
 .login-input::placeholder {
-  color: #64748b;
+  color: var(--text-muted);
   font-family: 'Inter', sans-serif;
 }
 
@@ -277,8 +708,8 @@ body {
 
 /* Pulse Glow */
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+  0%, 100% { box-shadow: 0 0 15px var(--primary-glow); }
+  50% { box-shadow: 0 0 30px var(--primary-glow); }
 }
 
 .glow-pulse {
@@ -289,11 +720,12 @@ body {
 .rail-track-line {
   background: repeating-linear-gradient(
     90deg,
-    rgba(59, 130, 246, 0.4) 0px,
-    rgba(59, 130, 246, 0.4) 4px,
+    var(--primary) 0px,
+    var(--primary) 4px,
     transparent 4px,
     transparent 8px
   );
+  opacity: 0.6;
 }
 
 /* Logout Button */
@@ -305,19 +737,18 @@ body {
   border-radius: 0.5rem;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #f87171;
-  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.08);
   border: 1px solid rgba(239, 68, 68, 0.25);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .btn-logout:hover {
-  background-color: rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.18);
   border-color: rgba(239, 68, 68, 0.45);
-  color: #fca5a5;
+  color: #dc2626;
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
 }
 
 /* ==================== Train Movement & GIS Radar Styles ==================== */
@@ -337,7 +768,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 16px currentColor, 0 4px 10px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 16px currentColor, 0 4px 10px rgba(0, 0, 0, 0.5);
   border: 2px solid #ffffff;
   position: relative;
   z-index: 20;
@@ -365,9 +796,9 @@ body {
   top: -24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(10, 15, 29, 0.92);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
   padding: 1px 6px;
   border-radius: 4px;
   font-family: 'JetBrains Mono', monospace;
@@ -375,15 +806,15 @@ body {
   font-weight: 700;
   white-space: nowrap;
   pointer-events: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   z-index: 30;
 }
 
 /* Priority Train Aura Colors */
-.train-p1 { color: #f59e0b; background: linear-gradient(135deg, #d97706, #b45309); } /* Premium: Vande Bharat / Rajdhani */
-.train-p2 { color: #3b82f6; background: linear-gradient(135deg, #2563eb, #1d4ed8); } /* Mail / Express */
-.train-p3 { color: #ec4899; background: linear-gradient(135deg, #db2777, #9d174d); } /* Freight / Container */
-.train-p4 { color: #10b981; background: linear-gradient(135deg, #059669, #047857); } /* Suburban EMU */
+.train-p1 { color: #d97706; background: linear-gradient(135deg, #d97706, #b45309); } /* Premium: Vande Bharat / Rajdhani */
+.train-p2 { color: var(--primary); background: linear-gradient(135deg, var(--primary), var(--primary-dark)); } /* Mail / Express */
+.train-p3 { color: #db2777; background: linear-gradient(135deg, #db2777, #9d174d); } /* Freight / Container */
+.train-p4 { color: #059669; background: linear-gradient(135deg, #059669, #047857); } /* Suburban EMU */
 
 /* Layer Switcher Buttons */
 .gis-layer-btn {
@@ -391,24 +822,530 @@ body {
   border-radius: 0.5rem;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid var(--rail-border);
-  background: rgba(15, 23, 42, 0.75);
-  color: #94a3b8;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .gis-layer-btn:hover {
-  background: rgba(30, 41, 59, 0.9);
-  color: #f1f5f9;
-  border-color: #3b82f6;
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+  border-color: var(--primary);
 }
 
 .gis-layer-btn.active {
-  background: rgba(59, 130, 246, 0.2);
-  color: #60a5fa;
-  border-color: #3b82f6;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 0 12px var(--primary-glow);
 }
 
+/* ==================== Seamless Light / Dark Mode Color Overrides ==================== */
+/* Ensures existing utility classes smoothly adapt to theme tokens without changing layout */
 
+/* Universal pure white retention for buttons, badges & icons on solid dark/brand backgrounds */
+.btn-primary,
+button[type="submit"],
+#btn-submit-login,
+#btn-quick-solve,
+#btn-run-whatif,
+#btn-test-reconcile,
+#btn-submit-checklist,
+#btn-modal-close-action,
+.gantt-train-item,
+.gantt-train-item *,
+.train-marker-body,
+.train-marker-body *,
+.brand-gradient-bg,
+.brand-gradient-bg *,
+[class*="bg-red-600"] > *,
+[class*="bg-emerald-600"] > *,
+[class*="bg-blue-600"] > *,
+[class*="bg-purple-600"] > *,
+button[class*="bg-gradient"] *,
+button[class*="bg-blue-600"] *,
+button[class*="bg-emerald-600"] *,
+button[class*="bg-red-600"] *,
+button[class*="bg-purple-600"] * {
+  color: #FFFFFF !important;
+  fill: #FFFFFF !important;
+}
+
+/* Light Mode: Adapt white text on light surfaces to crisp high-contrast charcoal */
+html:not(.dark) .text-white:not(button):not(button *):not(.gantt-train-item):not(.gantt-train-item *):not(.train-marker-body *):not([class*="bg-red-600"]):not([class*="bg-red-600"] *):not([class*="bg-emerald-600"]):not([class*="bg-emerald-600"] *):not([class*="bg-blue-600"]):not([class*="bg-blue-600"] *):not([class*="bg-purple-600"]):not([class*="bg-purple-600"] *) {
+  color: var(--text-primary) !important;
+}
+
+html:not(.dark) .text-slate-100,
+html:not(.dark) .text-slate-200,
+html:not(.dark) .text-slate-300 {
+  color: var(--text-primary) !important;
+}
+
+html:not(.dark) .text-slate-400 {
+  color: var(--text-secondary) !important;
+}
+
+html:not(.dark) .text-slate-500,
+html:not(.dark) .text-slate-600 {
+  color: var(--text-muted) !important;
+}
+
+/* Accessible High-Contrast Colored Text in Light Mode (WCAG 2.2 AA / AAA Compliant) */
+html:not(.dark) .text-emerald-300,
+html:not(.dark) .text-emerald-400 {
+  color: #065F46 !important; /* Deep forest emerald: 7.1:1 on white */
+}
+
+html:not(.dark) .text-amber-300,
+html:not(.dark) .text-amber-400 {
+  color: #92400E !important; /* Deep warm amber: 6.1:1 on white */
+}
+
+html:not(.dark) .text-blue-300,
+html:not(.dark) .text-blue-400 {
+  color: #1E40AF !important; /* Deep royal blue: 7.4:1 on white */
+}
+
+html:not(.dark) .text-purple-300,
+html:not(.dark) .text-purple-400 {
+  color: #5B21B6 !important; /* Deep rich purple: 8.1:1 on white */
+}
+
+html:not(.dark) .text-red-300,
+html:not(.dark) .text-red-400 {
+  color: #991B1B !important; /* Deep crimson: 6.8:1 on white */
+}
+
+html:not(.dark) .text-pink-300,
+html:not(.dark) .text-pink-400 {
+  color: #9D174D !important; /* Deep rose: 6.5:1 on white */
+}
+
+html:not(.dark) .text-cyan-300,
+html:not(.dark) .text-cyan-400 {
+  color: #0E7490 !important; /* Deep teal: 6.2:1 on white */
+}
+
+/* Status Badge Background Tints & Borders in Light Mode */
+html:not(.dark) .bg-emerald-500\/10,
+html:not(.dark) .bg-emerald-500\/20,
+html:not(.dark) .bg-emerald-950\/20,
+html:not(.dark) .bg-emerald-950\/40 {
+  background-color: #ECFDF5 !important;
+  border-color: #A7F3D0 !important;
+}
+
+html:not(.dark) .bg-amber-500\/10,
+html:not(.dark) .bg-amber-500\/20,
+html:not(.dark) .bg-amber-950\/20,
+html:not(.dark) .bg-amber-950\/40 {
+  background-color: #FFFBEB !important;
+  border-color: #FDE68A !important;
+}
+
+html:not(.dark) .bg-red-500\/10,
+html:not(.dark) .bg-red-500\/20,
+html:not(.dark) .bg-red-950\/20,
+html:not(.dark) .bg-red-950\/40 {
+  background-color: #FEF2F2 !important;
+  border-color: #FECACA !important;
+}
+
+html:not(.dark) .bg-blue-500\/10,
+html:not(.dark) .bg-blue-500\/20,
+html:not(.dark) .bg-blue-950\/20,
+html:not(.dark) .bg-blue-950\/40 {
+  background-color: #EFF6FF !important;
+  border-color: #BFDBFE !important;
+}
+
+html:not(.dark) .bg-purple-500\/10,
+html:not(.dark) .bg-purple-500\/20,
+html:not(.dark) .bg-purple-950\/20,
+html:not(.dark) .bg-purple-950\/30,
+html:not(.dark) .bg-purple-950\/40 {
+  background-color: #F5F3FF !important;
+  border-color: #DDD6FE !important;
+}
+
+/* Neutral Surfaces in Light Mode */
+html:not(.dark) .bg-slate-800,
+html:not(.dark) .bg-slate-900,
+html:not(.dark) .bg-slate-950 {
+  background-color: var(--surface-secondary) !important;
+}
+
+html:not(.dark) .bg-slate-900\/50,
+html:not(.dark) .bg-slate-900\/60,
+html:not(.dark) .bg-slate-900\/80,
+html:not(.dark) .bg-slate-900\/90,
+html:not(.dark) .bg-slate-950\/40,
+html:not(.dark) .bg-slate-950\/50,
+html:not(.dark) .bg-slate-950\/60,
+html:not(.dark) .bg-slate-950\/70,
+html:not(.dark) .bg-slate-950\/80,
+html:not(.dark) .bg-slate-950\/85 {
+  background-color: var(--surface-secondary) !important;
+}
+
+html:not(.dark) .border-slate-700,
+html:not(.dark) .border-slate-700\/80,
+html:not(.dark) .border-slate-800,
+html:not(.dark) .border-slate-800\/80,
+html:not(.dark) .border-slate-900 {
+  border-color: var(--border) !important;
+}
+
+html:not(.dark) .border-rail-border,
+html:not(.dark) .border-rail-border\/60,
+html:not(.dark) .border-rail-border\/80 {
+  border-color: var(--border) !important;
+}
+
+html:not(.dark) .bg-rail-card,
+html:not(.dark) .bg-rail-card\/90,
+html:not(.dark) .bg-rail-card\/80,
+html:not(.dark) .bg-rail-card\/50 {
+  background-color: var(--surface) !important;
+}
+
+html:not(.dark) .bg-rail-dark {
+  background-color: var(--background) !important;
+}
+
+/* Universal Form Inputs, Textarea, Selects & Placeholders */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+textarea,
+select {
+  background-color: var(--surface-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+select option {
+  background-color: var(--surface) !important;
+  color: var(--text-primary) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  background-color: var(--surface) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--primary) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--primary-glow) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 1 !important;
+}
+
+/* Universal Table Styling */
+table thead {
+  background-color: var(--surface-secondary) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+table thead th {
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+}
+
+table tbody tr {
+  border-color: var(--border) !important;
+  transition: background-color 0.15s ease;
+}
+
+html:not(.dark) table tbody tr:hover,
+html:not(.dark) tr.hover\:bg-slate-900\/50:hover,
+html:not(.dark) tr.hover\:bg-slate-900\/30:hover {
+  background-color: var(--surface-secondary) !important;
+}
+
+table tbody td {
+  color: var(--text-primary);
+}
+
+/* Gantt Chart Theme Contrast */
+html:not(.dark) .gantt-grid,
+html:not(.dark) .gantt-row {
+  border-color: var(--border) !important;
+}
+
+html:not(.dark) .gantt-grid.sticky,
+html:not(.dark) .gantt-header-sticky,
+html:not(.dark) .gantt-header-corner,
+html:not(.dark) .gantt-section-meta {
+  background-color: var(--surface-secondary) !important;
+  border-color: var(--border) !important;
+}
+
+html:not(.dark) .gantt-hour-cell {
+  border-color: var(--border) !important;
+}
+
+/* Modals & Dialogs High-Contrast Text */
+.modal-content {
+  background-color: var(--surface) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+}
+
+html:not(.dark) .modal-content {
+  background-color: #FFFFFF !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25) !important;
+}
+
+html.dark .modal-content {
+  background-color: #181B1F !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6) !important;
+}
+
+html:not(.dark) .modal-content h1,
+html:not(.dark) .modal-content h2,
+html:not(.dark) .modal-content h3,
+html:not(.dark) .modal-content h4,
+html:not(.dark) .modal-content strong,
+html:not(.dark) .modal-content .text-white {
+  color: var(--text-primary) !important;
+}
+
+html:not(.dark) .modal-content .text-slate-200,
+html:not(.dark) .modal-content .text-slate-300 {
+  color: var(--text-secondary) !important;
+}
+
+html:not(.dark) #app-toast {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2) !important;
+}
+
+html:not(.dark) #app-toast span {
+  color: #F8FAFC !important;
+}
+
+html:not(.dark) #btn-print-cert {
+  background-color: var(--surface-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+}
+
+html:not(.dark) #btn-print-cert:hover {
+  background-color: var(--surface) !important;
+  border-color: var(--primary) !important;
+}
+
+/* Dark Mode Neutral Overrides (Eliminates blue tint in slate) */
+html.dark .bg-slate-900 {
+  background-color: #181B1F !important;
+}
+
+html.dark .bg-slate-950 {
+  background-color: #111315 !important;
+}
+
+html.dark .bg-slate-900\/50,
+html.dark .bg-slate-900\/60,
+html.dark .bg-slate-900\/80,
+html.dark .bg-slate-900\/90 {
+  background-color: rgba(24, 27, 31, 0.85) !important;
+}
+
+html.dark .bg-slate-950\/40,
+html.dark .bg-slate-950\/50,
+html.dark .bg-slate-950\/60,
+html.dark .bg-slate-950\/70,
+html.dark .bg-slate-950\/80,
+html.dark .bg-slate-950\/85 {
+  background-color: rgba(17, 19, 21, 0.9) !important;
+}
+
+html.dark .border-slate-700,
+html.dark .border-slate-800,
+html.dark .border-slate-800\/80,
+html.dark .border-slate-900 {
+  border-color: var(--border) !important;
+}
+
+/* Primary Brand Gradient Accents (RailOne Crimson + Warm Orange) */
+.brand-gradient-bg {
+  background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
+}
+
+.brand-gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==================== STRICT TWO-VALUE KPI CONTRAST FIX ==================== */
+/* Light Mode: 94.2% -> High-contrast Dark Navy (#172B4D) | Dark Mode: Pristine White (#FFFFFF) */
+#kpi-utilization,
+.corridor-utilization-value {
+  color: #172B4D !important;
+}
+
+html.dark #kpi-utilization,
+html.dark .corridor-utilization-value {
+  color: #FFFFFF !important;
+}
+
+/* Light Mode: 3 -> High-contrast Rich Purple (#5B21B6) | Dark Mode: Pristine White (#FFFFFF) */
+#kpi-shadow-groups,
+.shadow-block-groups-value {
+  color: #5B21B6 !important;
+}
+
+html.dark #kpi-shadow-groups,
+html.dark .shadow-block-groups-value {
+  color: #FFFFFF !important;
+}
+
+/* Asset Availability KPI Contrast */
+#kpi-asset-availability,
+.kpi-avail-value {
+  color: #0F5132 !important; /* Rich deep green in light mode */
+}
+
+html.dark #kpi-asset-availability,
+html.dark .kpi-avail-value {
+  color: #34D399 !important; /* Emerald green in dark mode */
+}
+
+/* ==================== PROGRESSIVE DISCLOSURE & DENSITY STYLES ==================== */
+
+/* Compact Horizontal Operational Pipeline */
+.data-pipeline-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--surface-secondary);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.pipeline-step-node {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.pipeline-step-node:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px -2px var(--primary-glow);
+}
+
+.pipeline-step-node.active-node {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.pipeline-step-arrow {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Compact Operational Data Source Pills */
+.op-data-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.75rem;
+  border-radius: 0.625rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  transition: all 0.15s ease;
+}
+
+.op-data-pill:hover {
+  border-color: var(--border-hover, var(--primary));
+}
+
+/* Expandable Task Detail Drawer Row */
+.task-detail-row {
+  background-color: var(--surface-secondary);
+  transition: all 0.2s ease;
+}
+
+.task-detail-row.collapsed {
+  display: none;
+}
+
+.task-detail-drawer {
+  padding: 1rem;
+  border-top: 1px dashed var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Progressive Disclosure Accordions */
+.disclosure-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.625rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.disclosure-toggle-btn:hover {
+  background-color: var(--surface-secondary);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+
+.disclosure-panel-body {
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+}
+
+.disclosure-panel-body.is-hidden {
+  display: none;
+}
+
+/* Header Text Contrast Safety in Light Mode */
+#top-breadcrumb-title {
+  color: var(--text-primary) !important;
+}
+
+.top-header-corridor-badge {
+  background-color: var(--surface-secondary) !important;
+  border-color: var(--border) !important;
+  color: var(--text-secondary) !important;
+}

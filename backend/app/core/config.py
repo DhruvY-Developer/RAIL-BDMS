@@ -2,6 +2,7 @@
 Rail-BDMS: Application Configuration & Constants
 Domain: Indian Railways Rolling Block Demand Management System
 """
+import os
 from typing import List
 from pydantic import BaseModel
 
@@ -30,8 +31,8 @@ class Settings(BaseModel):
     WEIGHT_URGENCY: float = 0.35
     WEIGHT_SHADOW_OPPORTUNITY: float = 0.10
     
-    # Host and Port
-    HOST: str = "0.0.0.0"
-    PORT: int = 8000
+    # Host and Port (Dynamic binding for Render and cloud hosts)
+    HOST: str = os.getenv("HOST", "0.0.0.0")
+    PORT: int = int(os.getenv("PORT", "8000"))
 
 settings = Settings()

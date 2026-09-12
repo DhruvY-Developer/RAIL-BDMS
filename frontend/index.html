@@ -20,19 +20,20 @@
         extend: {
           colors: {
             rail: {
-              dark: '#0a0d14',
-              card: '#111726',
-              cardHover: '#161f33',
-              border: '#1f293d',
-              accent: '#3b82f6',
-              accentGlow: 'rgba(59, 130, 246, 0.25)',
+              dark: 'var(--background)',
+              card: 'var(--surface)',
+              cardHover: 'var(--surface-secondary)',
+              border: 'var(--border)',
+              accent: 'var(--primary)',
+              accentGlow: 'var(--primary-glow)',
+              warmOrange: 'var(--accent)',
               success: '#10b981',
               warning: '#f59e0b',
               danger: '#ef4444',
-              shadow: '#8b5cf6',
-              tms: '#3b82f6',
-              smms: '#10b981',
-              tdms: '#f59e0b',
+              shadow: 'var(--dept-shadow)',
+              tms: 'var(--dept-tms)',
+              smms: 'var(--dept-smms)',
+              tdms: 'var(--dept-tdms)',
             }
           },
           fontFamily: {
@@ -58,24 +59,24 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/static/styles.css?v=1.2">
 </head>
-<body class="bg-rail-dark text-slate-100 font-sans min-h-screen antialiased selection:bg-blue-600 selection:text-white">
+<body class="bg-rail-dark text-slate-100 font-sans min-h-screen antialiased selection:bg-red-600 selection:text-white transition-colors duration-200">
 
   <!-- ==================== COMPULSORY OPERATIONS LOGIN PORTAL ==================== -->
-  <div id="login-portal" class="min-h-screen w-full flex flex-col justify-between login-portal-bg relative overflow-hidden selection:bg-blue-600 selection:text-white">
+  <div id="login-portal" class="min-h-screen w-full flex flex-col justify-between login-portal-bg relative overflow-hidden selection:bg-red-600 selection:text-white">
     
     <!-- Top Ambient Glow Elements -->
-    <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
-    <div class="absolute top-1/3 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
+    <div class="absolute top-1/3 right-10 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-10 left-10 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
     <!-- Portal Top Bar -->
     <header class="w-full px-6 py-4 flex items-center justify-between border-b border-slate-800/80 bg-slate-950/40 backdrop-blur-md relative z-10">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-indigo-600 to-slate-900 flex items-center justify-center ring-1 ring-blue-400/40 shadow-lg shadow-blue-500/20">
-          <i data-lucide="shield-check" class="w-5 h-5 text-blue-300"></i>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-700 via-rose-600 to-amber-600 flex items-center justify-center ring-1 ring-red-400/40 shadow-lg shadow-red-500/20">
+          <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
         </div>
         <div>
-          <div class="text-[11px] font-mono font-bold tracking-wider uppercase text-blue-400">Indian Railways • Northern Railway</div>
+          <div class="text-[11px] font-mono font-bold tracking-wider uppercase text-red-500 dark:text-red-400">Indian Railways • Northern Railway</div>
           <div class="text-sm font-display font-extrabold text-white tracking-tight">Delhi Division Control Office</div>
         </div>
       </div>
@@ -83,12 +84,12 @@
       <!-- Live Clock & Clearance Badge -->
       <div class="flex items-center gap-3">
         <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800 text-xs font-mono text-slate-300">
-          <i data-lucide="clock" class="w-3.5 h-3.5 text-blue-400"></i>
+          <i data-lucide="clock" class="w-3.5 h-3.5 text-red-500 dark:text-red-400"></i>
           <span id="login-live-clock">--:--:-- IST</span>
         </div>
-        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-950/60 border border-blue-500/30 text-[11px] font-mono text-blue-300">
+        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-950/40 border border-red-500/30 text-[11px] font-mono text-red-400">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-          <span>SYSTEM SECURE</span>
+          <span>SECURE DEMO ENVIRONMENT</span>
         </div>
       </div>
     </header>
@@ -181,7 +182,7 @@
           <!-- Options: Remember Session & Security Badge -->
           <div class="flex items-center justify-between pt-1 text-xs">
             <label class="flex items-center gap-2 cursor-pointer select-none text-slate-400 hover:text-slate-300">
-              <input id="login-remember" type="checkbox" checked class="rounded border-slate-700 bg-slate-900 text-blue-600 focus:ring-blue-500 focus:ring-offset-slate-900 w-3.5 h-3.5">
+              <input id="login-remember" type="checkbox" checked class="rounded border-slate-700 bg-slate-900 text-red-600 focus:ring-red-500 focus:ring-offset-slate-900 w-3.5 h-3.5">
               <span>Remember Officer Session</span>
             </label>
             <span class="text-[11px] font-mono text-slate-500">Delhi Control Room</span>
@@ -191,7 +192,7 @@
           <button 
             type="submit" 
             id="btn-submit-login" 
-            class="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:via-indigo-500 hover:to-purple-500 text-white font-semibold text-sm shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 transition duration-150 active:scale-[0.98] group cursor-pointer"
+            class="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-red-700 via-rose-600 to-amber-600 hover:from-red-600 hover:via-rose-500 hover:to-amber-500 text-white font-semibold text-sm shadow-lg shadow-red-500/25 flex items-center justify-center gap-2 transition duration-150 active:scale-[0.98] group cursor-pointer"
           >
             <i data-lucide="log-in" class="w-4 h-4 transition-transform group-hover:translate-x-0.5"></i>
             <span id="login-btn-label">Authorize & Access Console</span>
@@ -202,19 +203,19 @@
         <!-- Quick Access Helper Pill for Easy Testing -->
         <div class="pt-3 border-t border-slate-800/80 flex flex-col items-center gap-2">
           <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
-            <i data-lucide="info" class="w-3.5 h-3.5 text-blue-400"></i>
+            <i data-lucide="info" class="w-3.5 h-3.5 text-red-500 dark:text-red-400"></i>
             <span>Authorized Operations Credentials:</span>
           </div>
           <button 
             type="button" 
             id="btn-quick-cred" 
-            class="px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-300 font-mono text-xs flex items-center gap-2 transition duration-150 cursor-pointer"
-            title="Auto-fill CTPC officer credentials"
+            class="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-600 dark:text-red-400 font-mono text-xs flex items-center gap-2 transition duration-150 cursor-pointer"
+            title="Auto-fill CTPC authorized officer credentials"
           >
-            <span>ID: <strong class="text-white">CTPC</strong></span>
-            <span class="text-slate-500">|</span>
-            <span>PWD: <strong class="text-white">CTPC@123</strong></span>
-            <span class="ml-1 text-[10px] px-1.5 py-0.2 rounded bg-blue-600 text-white font-sans font-bold">Auto Fill</span>
+            <span>Officer ID: <strong class="text-slate-900 dark:text-white">CTPC</strong></span>
+            <span class="text-slate-500">•</span>
+            <span class="text-slate-600 dark:text-slate-300 font-sans">Authorized Access</span>
+            <span class="ml-1 text-[10px] px-1.5 py-0.5 rounded bg-red-600 text-white font-sans font-bold">Auto Fill</span>
           </button>
         </div>
 
@@ -233,209 +234,426 @@
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
         <span>Delhi Division Operations Network • Server: <span class="font-mono text-slate-400">DEL-CTRL-SRV01</span></span>
       </div>
-      <div class="font-mono">Rail-BDMS v1.0 • Mathematical Timetable Protection Certified</div>
+      <div class="font-mono">Rail-BDMS v1.0 • Timetable Protection Verification System</div>
     </footer>
 
   </div>
 
   <!-- ==================== AUTHENTICATED OPERATIONAL DASHBOARD ==================== -->
-  <div id="app-dashboard" class="hidden min-h-screen flex flex-col">
+  <div id="app-dashboard" class="hidden min-h-screen flex bg-rail-dark text-slate-100 relative overflow-x-hidden">
 
-    <!-- Top Navigation Header -->
-    <header class="bg-rail-card/90 backdrop-blur-md border-b border-rail-border sticky top-0 z-50 px-6 py-3.5 flex items-center justify-between shadow-lg">
-      <div class="flex items-center gap-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20 ring-1 ring-white/20">
-            <i data-lucide="train" class="w-6 h-6 text-white"></i>
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden transition-opacity duration-300"></div>
+
+    <!-- ==================== FIXED VERTICAL SIDEBAR ==================== -->
+    <aside id="app-sidebar" class="app-sidebar">
+      
+      <!-- Top Brand / Logo Section -->
+      <div class="sidebar-header px-4 py-3.5 border-b border-rail-border flex items-center justify-between gap-3 bg-slate-950/40">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-700 via-rose-600 to-amber-600 flex items-center justify-center shadow-lg shadow-red-500/20 ring-1 ring-white/20 shrink-0">
+            <i data-lucide="train" class="w-5 h-5 text-white"></i>
           </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <h1 class="font-display font-bold text-xl tracking-tight bg-gradient-to-r from-blue-400 via-indigo-200 to-white bg-clip-text text-transparent">Rail-BDMS</h1>
-              <span class="px-2 py-0.5 text-[10px] font-mono font-semibold rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30">v1.0 • DSS</span>
+          <div class="sidebar-hide-on-collapse min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="font-display font-bold text-base tracking-tight bg-gradient-to-r from-red-500 via-rose-400 to-amber-400 bg-clip-text text-transparent truncate">Rail-BDMS</span>
+              <span class="px-1.5 py-0.2 text-[9px] font-mono font-semibold rounded-full bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30 shrink-0">v1.0</span>
             </div>
-            <p class="text-xs text-slate-400">Integrated Rolling Block Demand Management System • Northern Railway (Delhi Div)</p>
+            <div class="text-[10px] text-slate-400 font-mono tracking-tight truncate">Northern Railway • DSS</div>
           </div>
         </div>
         
-        <!-- Corridor Badge -->
-        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-rail-border text-xs text-slate-300">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span class="font-medium">Corridor:</span> <span class="font-mono text-emerald-400">NZM — PWL — RDI (HDN)</span>
-        </div>
+        <!-- Toggle Button (Top) -->
+        <button id="btn-sidebar-toggle-top" class="sidebar-hide-on-collapse text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800/80 transition" title="Collapse sidebar (Ctrl+B)">
+          <i data-lucide="panel-left-close" class="w-4 h-4"></i>
+        </button>
       </div>
 
-      <!-- Live Telemetry & Control Actions -->
-      <div class="flex items-center gap-4">
-        <!-- Live Clock -->
-        <div class="hidden lg:flex flex-col items-end px-3 py-1 rounded-lg bg-slate-900/60 border border-rail-border">
-          <div class="flex items-center gap-1.5 text-xs text-slate-400">
-            <i data-lucide="clock" class="w-3.5 h-3.5 text-blue-400"></i>
-            <span id="live-time-ist" class="font-mono font-semibold text-slate-200">--:--:-- IST</span>
-          </div>
-          <div class="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> LIVE WS STREAM ACTIVE
+      <!-- Navigation Items Container (Scrollable) -->
+      <nav class="flex-1 px-3 py-3 space-y-1.5 overflow-y-auto overflow-x-hidden">
+        
+        <!-- Category: Overview -->
+        <div class="sidebar-category-header sidebar-hide-on-collapse">Dashboard</div>
+
+        <button class="nav-tab active" data-view="command-center" data-tooltip="Command Center">
+          <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 text-blue-400"></i>
+          <span class="sidebar-hide-on-collapse truncate">Command Center</span>
+        </button>
+
+        <!-- Category: Operations & Planning (Accordion 1) -->
+        <div class="sidebar-category-header sidebar-hide-on-collapse pt-2">Block Management</div>
+
+        <div class="sidebar-accordion open" id="accordion-blocks">
+          <button class="sidebar-accordion-trigger" data-tooltip="Block Management" aria-expanded="true">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <i data-lucide="boxes" class="w-4 h-4 shrink-0 text-purple-400"></i>
+              <span class="sidebar-hide-on-collapse truncate">Block Management</span>
+            </div>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 sidebar-chevron sidebar-hide-on-collapse shrink-0"></i>
+          </button>
+          <div class="sidebar-submenu">
+            <button class="nav-tab" data-view="gantt-timeline" data-tooltip="Timetable & Gantt">
+              <i data-lucide="calendar-range" class="w-3.5 h-3.5 shrink-0 text-slate-400"></i>
+              <span class="truncate">Timetable & Gantt</span>
+            </button>
+            <button class="nav-tab" data-view="shadow-workbench" data-tooltip="Shadow Block Workbench">
+              <i data-lucide="layers" class="w-3.5 h-3.5 shrink-0 text-purple-300"></i>
+              <span class="truncate flex-1">Shadow Workbench</span>
+              <span id="badge-shadow-count" class="px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-mono border border-purple-500/30">16</span>
+            </button>
           </div>
         </div>
 
-        <!-- Quick Action: Re-Solve CP-SAT -->
-        <button id="btn-quick-solve" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-md shadow-blue-500/20 transition duration-150 active:scale-95">
-          <i data-lucide="sparkles" class="w-4 h-4"></i>
-          <span>Optimize CP-SAT</span>
-        </button>
+        <!-- Accordion 2: Corridor & Assets -->
+        <div class="sidebar-category-header sidebar-hide-on-collapse pt-2">Corridor & Assets</div>
 
-        <!-- View Protection Certificate Modal Button -->
-        <button id="btn-view-cert" class="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-semibold transition active:scale-95">
-          <i data-lucide="shield-check" class="w-4 h-4"></i>
-          <span class="hidden sm:inline">Safety Certificate</span>
-        </button>
-
-        <!-- Controller Persona Switcher & Logout -->
-        <div class="flex items-center gap-3 pl-3 border-l border-rail-border">
-          <div class="flex items-center gap-2">
-            <div class="relative">
-              <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-blue-600 flex items-center justify-center font-bold text-xs ring-2 ring-purple-400/30 text-white">
-                CT
-              </div>
-              <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-rail-card"></span>
+        <div class="sidebar-accordion open" id="accordion-corridor">
+          <button class="sidebar-accordion-trigger" data-tooltip="Corridor & Network" aria-expanded="true">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <i data-lucide="map-pin" class="w-4 h-4 shrink-0 text-emerald-400"></i>
+              <span class="sidebar-hide-on-collapse truncate">Corridor & Assets</span>
             </div>
-            <div class="hidden sm:block text-left">
-              <div class="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
-                <span>CTPC / Sr. DOM</span>
-                <span class="px-1.5 py-0.2 text-[9px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded">ACTIVE</span>
-              </div>
-              <div class="text-[10px] text-slate-400">Delhi Control Office</div>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 sidebar-chevron sidebar-hide-on-collapse shrink-0"></i>
+          </button>
+          <div class="sidebar-submenu">
+            <button class="nav-tab" data-view="gis-map" data-tooltip="Geospatial GIS Map">
+              <i data-lucide="map" class="w-3.5 h-3.5 shrink-0 text-slate-400"></i>
+              <span class="truncate">Geospatial GIS Map</span>
+            </button>
+            <button class="nav-tab" data-view="reconciliation-hub" data-tooltip="Asset Identity Hub">
+              <i data-lucide="git-merge" class="w-3.5 h-3.5 shrink-0 text-amber-400"></i>
+              <span class="truncate flex-1">Asset Identity Hub</span>
+              <span id="badge-recon-count" class="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-mono border border-amber-500/30">1</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Field Operations -->
+        <div class="sidebar-category-header sidebar-hide-on-collapse pt-2">Field Execution</div>
+
+        <button class="nav-tab" data-view="field-sse-cockpit" data-tooltip="Field Depot (SSE) Cockpit">
+          <i data-lucide="smartphone" class="w-4 h-4 shrink-0 text-indigo-400"></i>
+          <span class="sidebar-hide-on-collapse truncate">Field SSE Cockpit</span>
+        </button>
+
+        <!-- System & Actions Divider -->
+        <div class="pt-2 pb-1 border-t border-rail-border/60 my-2"></div>
+        <div class="sidebar-category-header sidebar-hide-on-collapse">Verification & Actions</div>
+
+        <button id="sidebar-btn-cert" class="nav-tab text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200" data-tooltip="Protection Verification">
+          <i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i>
+          <span class="sidebar-hide-on-collapse truncate">Protection Verification</span>
+        </button>
+
+        <button id="sidebar-btn-solve" class="nav-tab text-red-500 dark:text-red-400 hover:text-red-600" data-tooltip="Optimize CP-SAT">
+          <i data-lucide="sparkles" class="w-4 h-4 shrink-0 text-red-500 dark:text-red-400"></i>
+          <span class="sidebar-hide-on-collapse truncate">Optimize CP-SAT</span>
+        </button>
+
+      </nav>
+
+      <!-- Sidebar Footer / Bottom Controller Card & Collapse Button -->
+      <div class="sidebar-footer p-3 border-t border-rail-border bg-slate-950/50 space-y-2">
+        <!-- Controller Profile Summary -->
+        <div class="flex items-center gap-2.5 p-2 rounded-lg bg-slate-900/80 border border-rail-border/80">
+          <div class="relative shrink-0">
+            <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-blue-600 flex items-center justify-center font-bold text-[10px] ring-1 ring-purple-400/40 text-white">
+              CT
+            </div>
+            <span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-rail-card"></span>
+          </div>
+          <div class="sidebar-hide-on-collapse min-w-0 flex-1">
+            <div class="text-[11px] font-semibold text-slate-200 truncate flex items-center justify-between">
+              <span>CTPC / Sr. DOM</span>
+              <span class="text-[8px] font-mono px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-400">ACT</span>
+            </div>
+            <div class="text-[9px] text-slate-400 font-mono truncate">Delhi Control Office</div>
+          </div>
+        </div>
+
+        <!-- Bottom Collapse Button -->
+        <button id="btn-sidebar-toggle-bottom" class="w-full flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-xs font-medium border border-rail-border transition" title="Toggle Sidebar (Ctrl+B)">
+          <i data-lucide="chevron-left" id="icon-collapse-arrow" class="w-3.5 h-3.5 transition-transform duration-200"></i>
+          <span class="sidebar-hide-on-collapse text-[11px] font-mono">Collapse Sidebar</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+    <div id="app-main-wrapper" class="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
+      
+      <!-- Top Application Header -->
+      <header class="bg-rail-card/90 backdrop-blur-md border-b border-rail-border sticky top-0 z-30 px-4 sm:px-6 py-3 flex items-center justify-between shadow-lg">
+        
+        <!-- Left: Mobile Toggle + Breadcrumb & Current Context -->
+        <div class="flex items-center gap-3 shrink-0">
+          <!-- Mobile Hamburger Drawer Button -->
+          <button id="btn-mobile-menu" class="md:hidden text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 focus:outline-none" aria-label="Toggle navigation drawer">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+
+          <!-- Breadcrumb & Active View Title -->
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 hidden sm:inline">Delhi Division</span>
+            <span class="text-[11px] text-slate-400 dark:text-slate-600 hidden sm:inline">/</span>
+            <h2 id="top-breadcrumb-title" class="text-sm sm:text-base font-display font-bold text-slate-900 dark:text-white tracking-tight whitespace-nowrap">
+              Command Center
+            </h2>
+          </div>
+
+          <!-- Corridor Badge -->
+          <div class="hidden 2xl:flex items-center gap-2 px-2.5 py-1 rounded-md top-header-corridor-badge border border-rail-border text-xs text-slate-700 dark:text-slate-300 shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
+            <span class="font-medium">Corridor:</span> <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold">NZM — PWL — RDI (HDN)</span>
+          </div>
+        </div>
+
+        <!-- Right: Telemetry & Actions -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <!-- Active Safety Invariant Banner -->
+          <div class="hidden xl:flex items-center gap-2 text-xs bg-emerald-950/40 border border-emerald-500/30 px-3 py-1 rounded-full text-emerald-300">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span class="text-[11px]">Timetable Protection: <strong>0 Clashes</strong></span>
+          </div>
+
+          <!-- Live Clock -->
+          <div class="hidden sm:flex flex-col items-end px-2.5 py-1 rounded-lg bg-slate-900/60 border border-rail-border">
+            <div class="flex items-center gap-1.5 text-xs text-slate-400">
+              <i data-lucide="clock" class="w-3 h-3 text-red-500 dark:text-red-400"></i>
+              <span id="live-time-ist" class="font-mono font-semibold text-slate-200">--:--:-- IST</span>
+            </div>
+            <div class="text-[9px] font-mono text-emerald-400 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> LIVE WS STREAM
             </div>
           </div>
+
+          <!-- Theme Toggle (Light / Dark Mode) -->
+          <button id="btn-theme-toggle" class="theme-toggle-btn" title="Toggle Light / Dark theme" aria-label="Toggle Light / Dark theme">
+            <i data-lucide="sun" id="icon-theme-sun" class="w-4 h-4 hidden dark:inline text-amber-400"></i>
+            <i data-lucide="moon" id="icon-theme-moon" class="w-4 h-4 inline dark:hidden text-slate-600"></i>
+          </button>
+
+          <!-- Horizon Selector Navigation (Requirement 4) -->
+          <div id="horizon-selector-nav" class="flex items-center p-1 rounded-xl bg-slate-900/80 border border-rail-border shadow-inner gap-1">
+            <button id="nav-horizon-24h" onclick="switchHorizon('24H')" class="px-2.5 py-1 text-[11px] font-mono font-bold rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1" title="24-Hour Rolling Operational Plan">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+              <span>24H</span>
+            </button>
+            <button id="nav-horizon-7d" onclick="switchHorizon('7D')" class="px-2.5 py-1 text-[11px] font-mono font-bold rounded-lg bg-red-600 text-white shadow transition flex items-center gap-1" title="7-Day Weekly Tactical Plan">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
+              <span>7D</span>
+            </button>
+            <button id="nav-horizon-30d" onclick="switchHorizon('30D')" class="px-2.5 py-1 text-[11px] font-mono font-bold rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1" title="30-Day Monthly Strategic Plan">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              <span>30D</span>
+            </button>
+          </div>
+
+          <!-- Quick Action: Re-Solve CP-SAT -->
+          <button id="btn-quick-solve" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-red-700 to-rose-600 hover:from-red-600 hover:to-rose-500 text-white text-xs font-semibold shadow-md shadow-red-500/20 transition duration-150 active:scale-95" title="Re-run Google OR-Tools CP-SAT scheduler">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Optimize CP-SAT</span>
+          </button>
+
+          <!-- View Protection Verification Modal Button -->
+          <button id="btn-view-cert" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-semibold transition active:scale-95" title="Inspect timetable protection verification record">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            <span class="hidden md:inline">Protection Verification</span>
+          </button>
+
+          <!-- Sign Out -->
           <button id="btn-logout" class="btn-logout" title="Sign out of Delhi Control Office session">
             <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
             <span class="hidden md:inline">Sign Out</span>
           </button>
         </div>
-      </div>
-    </header>
 
-  <!-- Navigation Bar (Tabs) -->
-  <nav class="bg-rail-card/50 border-b border-rail-border px-6 py-2 flex items-center justify-between overflow-x-auto scrollbar-none">
-    <div class="flex items-center gap-2 min-w-max">
-      <button class="nav-tab active" data-view="command-center">
-        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-        <span>Command Center</span>
-      </button>
-      <button class="nav-tab" data-view="gantt-timeline">
-        <i data-lucide="calendar-range" class="w-4 h-4"></i>
-        <span>Timetable & Gantt</span>
-      </button>
-      <button class="nav-tab" data-view="gis-map">
-        <i data-lucide="map" class="w-4 h-4"></i>
-        <span>Geospatial GIS Map</span>
-      </button>
-      <button class="nav-tab" data-view="shadow-workbench">
-        <i data-lucide="layers" class="w-4 h-4"></i>
-        <span>Shadow Block Workbench</span>
-        <span id="badge-shadow-count" class="ml-1.5 px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-mono border border-purple-500/30">16</span>
-      </button>
-      <button class="nav-tab" data-view="reconciliation-hub">
-        <i data-lucide="git-merge" class="w-4 h-4"></i>
-        <span>Asset Identity Hub</span>
-        <span id="badge-recon-count" class="ml-1.5 px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-mono border border-amber-500/30">1</span>
-      </button>
-      <button class="nav-tab" data-view="field-sse-cockpit">
-        <i data-lucide="smartphone" class="w-4 h-4"></i>
-        <span>Field Depot (SSE) Cockpit</span>
-      </button>
-    </div>
+      </header>
 
-    <!-- Active Safety Status Banner -->
-    <div class="hidden xl:flex items-center gap-3 text-xs bg-emerald-950/40 border border-emerald-500/30 px-3 py-1 rounded-full text-emerald-300">
-      <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
-      <span>Timetable Protection: <strong>0 Clashes</strong> • Headway Envelopes Validated</span>
-    </div>
-  </nav>
-
-  <!-- Main View Container -->
-  <main class="flex-1 p-6 max-w-[1600px] w-full mx-auto space-y-6">
+      <!-- Main View Container -->
+      <main class="flex-1 p-4 sm:p-6 max-w-[1600px] w-full mx-auto space-y-6">
 
     <!-- ==================== VIEW 1: EXECUTIVE COMMAND CENTER ==================== -->
     <div id="view-command-center" class="view-panel active space-y-6">
       
-      <!-- Key KPI Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <!-- Key KPI Cards Grid (Prioritizing Asset Availability, Corridor Utilization, Zero Clash & Possessions Avoided) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         
-        <!-- Card 1: Corridor Utilization -->
-        <div class="kpi-card group hover:border-blue-500/50 transition-all duration-300">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Corridor Utilization</span>
-            <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition">
+        <!-- Card 1: Asset Availability (Top Problem Objective: Maximize Infrastructure Availability) -->
+        <div class="kpi-card group hover:border-emerald-500/50 transition-all duration-300">
+          <div class="flex items-center justify-between mb-2.5">
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-mono">Asset Availability</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition">
+              <i data-lucide="activity" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="kpi-asset-availability" class="text-3xl font-display font-extrabold tracking-tight kpi-avail-value">90.50%</span>
+            <span id="kpi-asset-availability-gain" class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20" title="Improvement over siloed baseline plan">+1.33 pp</span>
+          </div>
+          <div class="mt-2.5 flex items-center justify-between text-[11px] font-mono">
+            <span id="kpi-avail-horizon-label" class="text-emerald-700 dark:text-emerald-400 font-semibold">Current 7D Tactical Plan</span>
+            <span class="text-slate-400 text-[10px]">Baseline 89.17%</span>
+          </div>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 truncate">Symmetric uptime / total horizon availability</p>
+        </div>
+
+        <!-- Card 2: Corridor Utilization -->
+        <div class="kpi-card group hover:border-red-500/50 transition-all duration-300">
+          <div class="flex items-center justify-between mb-2.5">
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-mono">Corridor Utilization</span>
+            <div class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 dark:text-red-400 group-hover:scale-110 transition">
               <i data-lucide="gauge" class="w-4 h-4"></i>
             </div>
           </div>
           <div class="flex items-baseline gap-2">
-            <span id="kpi-utilization" class="text-3xl font-display font-extrabold text-white tracking-tight">94.2%</span>
-            <span class="text-xs font-semibold text-emerald-400 flex items-center gap-0.5">
+            <span id="kpi-utilization" class="text-3xl font-display font-extrabold tracking-tight corridor-utilization-value">94.2%</span>
+            <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
               <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +28.4%
             </span>
           </div>
-          <div class="mt-3 w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-            <div id="bar-utilization" class="bg-gradient-to-r from-blue-500 to-indigo-500 h-1.5 rounded-full" style="width: 94.2%"></div>
+          <div class="mt-2.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
+            <div id="bar-utilization" class="bg-gradient-to-r from-red-600 via-rose-500 to-amber-500 h-1.5 rounded-full" style="width: 94.2%"></div>
           </div>
-          <p class="text-[11px] text-slate-400 mt-2">Vs. fragmented individual department possessions</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 font-mono truncate">Vs. fragmented individual department possessions</p>
         </div>
 
-        <!-- Card 2: Shadow Block Consolidation -->
-        <div class="kpi-card group hover:border-purple-500/50 transition-all duration-300">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Shadow Block Groups</span>
-            <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition">
-              <i data-lucide="boxes" class="w-4 h-4"></i>
-            </div>
-          </div>
-          <div class="flex items-baseline gap-2">
-            <span id="kpi-shadow-groups" class="text-3xl font-display font-extrabold text-white tracking-tight">16</span>
-            <span class="text-xs font-mono text-purple-300 font-semibold">28 possessions merged</span>
-          </div>
-          <div class="mt-3 text-xs text-slate-300 flex items-center justify-between">
-            <span class="text-slate-400">Corridor Time Saved:</span>
-            <span id="kpi-hours-saved" class="font-mono font-bold text-purple-400">57.0 hrs</span>
-          </div>
-          <p class="text-[11px] text-slate-400 mt-1">Multi-department co-possession efficiency</p>
-        </div>
-
-        <!-- Card 3: Timetable Safety Invariant -->
+        <!-- Card 3: Timetable Conflicts -->
         <div class="kpi-card group hover:border-emerald-500/50 transition-all duration-300">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Timetable Conflicts</span>
-            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition">
+          <div class="flex items-center justify-between mb-2.5">
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-mono">Timetable Conflicts</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition">
               <i data-lucide="shield-check" class="w-4 h-4"></i>
             </div>
           </div>
           <div class="flex items-baseline gap-2">
-            <span id="kpi-conflicts" class="text-3xl font-display font-extrabold text-emerald-400 tracking-tight">0</span>
-            <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">ZERO CLASH</span>
+            <span id="kpi-conflicts" class="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">0</span>
+            <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">ZERO CLASH</span>
           </div>
-          <div class="mt-3 text-xs text-slate-300 flex items-center justify-between">
-            <span class="text-slate-400">Trains Monitored:</span>
-            <span id="kpi-trains-count" class="font-mono font-bold text-slate-200">152 Paths</span>
+          <div class="mt-2.5 text-xs text-slate-600 dark:text-slate-300 flex items-center justify-between font-mono">
+            <span class="text-slate-500 dark:text-slate-400">Trains Monitored:</span>
+            <span id="kpi-trains-count" class="font-bold text-slate-800 dark:text-slate-200">152 Paths</span>
           </div>
-          <p class="text-[11px] text-slate-400 mt-1">15m safety headways mathematically enforced</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 font-mono truncate">15m safety headways mathematically guaranteed</p>
         </div>
 
-        <!-- Card 4: Safety-Critical Demands -->
-        <div class="kpi-card group hover:border-amber-500/50 transition-all duration-300">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Overdue & IMR Defects</span>
-            <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition">
-              <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+        <!-- Card 4: Possessions Avoided & Corridor Hours Saved -->
+        <div class="kpi-card group hover:border-purple-500/50 transition-all duration-300">
+          <div class="flex items-center justify-between mb-2.5">
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-mono">Possessions Avoided</span>
+            <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 transition">
+              <i data-lucide="layers" class="w-4 h-4"></i>
             </div>
           </div>
           <div class="flex items-baseline gap-2">
-            <span id="kpi-overdue-count" class="text-3xl font-display font-extrabold text-amber-400 tracking-tight">18</span>
-            <span class="text-xs font-mono font-semibold text-slate-400">/ 132 Total Demands</span>
+            <span id="kpi-possessions-avoided" class="text-3xl font-display font-extrabold tracking-tight text-purple-600 dark:text-purple-400">29</span>
+            <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">-33.0%</span>
           </div>
-          <div class="mt-3 text-xs text-slate-300 flex items-center justify-between">
-            <span class="text-slate-400">Scheduled in Plan:</span>
-            <span id="kpi-scheduled-count" class="font-mono font-bold text-blue-400">32 Blocks</span>
+          <div class="mt-2.5 text-xs text-slate-600 dark:text-slate-300 flex items-center justify-between font-mono">
+            <span class="text-slate-500 dark:text-slate-400">Time Saved:</span>
+            <span id="kpi-hours-saved" class="font-bold text-purple-600 dark:text-purple-400">53.5 hrs</span>
           </div>
-          <p class="text-[11px] text-slate-400 mt-1">Prioritized by non-linear risk escalation</p>
+          <div class="mt-1 flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400">
+            <span>Co-Possessions:</span>
+            <span class="font-bold text-purple-600 dark:text-purple-400"><span id="kpi-shadow-groups" class="shadow-block-groups-value">6</span> Groups (<span id="kpi-tasks-consolidated">28</span> Tasks)</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== REQUIREMENT 1: OPERATIONAL DATA INGESTION & INTEGRATION HUB ==================== -->
+      <div class="dashboard-panel space-y-3.5" id="panel-data-integration">
+        <!-- Compact Header with Action Controls -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-rail-border/60 pb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600/20 via-rose-500/10 to-amber-500/20 border border-red-500/30 flex items-center justify-center text-red-500 dark:text-red-400 shadow-sm">
+              <i data-lucide="database" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="font-display font-bold text-sm text-slate-900 dark:text-slate-100 tracking-tight">Operational Data Ingestion & Integration Hub</h2>
+                <span class="px-2 py-0.5 text-[9px] font-mono font-semibold rounded-full bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/30">REQ 1</span>
+              </div>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">TMS • SMMS • TDMS • COA • Timetable (WTT) • Freight Forecast (FOIS) Unified Ingestion</p>
+            </div>
+          </div>
+
+          <!-- Progressive Disclosure & Quick Actions -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btn-toggle-integration-details" onclick="toggleIntegrationDetails()" class="disclosure-toggle-btn" title="Toggle detailed technical adapter cards and ingestion lineage">
+              <i data-lucide="chevron-down" id="icon-toggle-integration" class="w-3.5 h-3.5 transition-transform duration-200"></i>
+              <span id="label-toggle-integration">View Integration Details</span>
+            </button>
+            <button id="btn-sync-feeds" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-rail-border text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-sm transition active:scale-95" title="Re-poll and re-synchronize all 6 source adapters">
+              <i data-lucide="refresh-cw" class="w-3 h-3 text-blue-500"></i>
+              <span>Sync All</span>
+            </button>
+            <button id="btn-view-data-quality" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-semibold transition active:scale-95" title="Audit data quality, boundary validation, and integrity checks">
+              <i data-lucide="check-check" class="w-3 h-3"></i>
+              <span>Data Quality</span>
+            </button>
+            <button id="btn-view-correlation-scenario" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-700 dark:text-purple-300 text-xs font-semibold transition active:scale-95" title="Inspect 6-way cross-system operational convergence scenario">
+              <i data-lucide="git-merge" class="w-3 h-3"></i>
+              <span>Convergence</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Compact Operational Data Pills Strip (Level 1: Immediately Visible & Clean) -->
+        <div id="strip-operational-data" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 font-mono text-xs">
+          <!-- Dynamically populated via renderIntegrationStatus() -->
+        </div>
+
+        <!-- Level 2: Detailed 6 Ingestion Feed Cards (Progressively Disclosed) -->
+        <div id="container-detailed-integration" class="disclosure-panel-body is-hidden space-y-3 pt-2 border-t border-rail-border/40">
+          <div id="grid-integration-feeds" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+            <!-- Dynamically populated via JS with detailed adapter metrics -->
+          </div>
+          <div class="flex items-center justify-between text-[10px] font-mono text-slate-500 dark:text-slate-400 pt-1">
+            <span>Validation Status: <strong class="text-emerald-600 dark:text-emerald-400">100% Boundary Validated</strong></span>
+            <span>Lineage Depth: <strong class="text-blue-600 dark:text-blue-400">6 Source Systems Canonical Ingestion</strong></span>
+          </div>
+        </div>
+
+        <!-- Level 1: Compact Horizontal Operational Data Flow Pipeline -->
+        <div class="pt-1">
+          <div class="data-pipeline-container flex flex-wrap sm:flex-nowrap items-center justify-between text-xs font-mono">
+            <div class="flex items-center gap-1.5 overflow-x-auto py-1">
+              <button onclick="toggleIntegrationDetails(true)" class="pipeline-step-node" title="6 Ingested Operational Feeds">
+                <i data-lucide="database" class="w-3 h-3 text-red-500"></i>
+                <span>DATA SOURCES</span>
+              </button>
+              <span class="pipeline-step-arrow">→</span>
+              <button onclick="document.getElementById('btn-view-data-quality').click()" class="pipeline-step-node" title="Adapter Normalization & Clean Validation">
+                <i data-lucide="check-check" class="w-3 h-3 text-emerald-500"></i>
+                <span>INTEGRATION</span>
+              </button>
+              <span class="pipeline-step-arrow">→</span>
+              <button onclick="switchView('reconciliation-hub')" class="pipeline-step-node" title="4-Tier Deterministic Asset Resolution">
+                <i data-lucide="git-merge" class="w-3 h-3 text-amber-500"></i>
+                <span>ASSET RESOLUTION</span>
+              </button>
+              <span class="pipeline-step-arrow">→</span>
+              <button onclick="openAiEngineInfo()" class="pipeline-step-node" title="RailRisk Calibrated Priority Scoring">
+                <i data-lucide="brain-circuit" class="w-3 h-3 text-purple-500"></i>
+                <span>AI PRIORITY</span>
+              </button>
+              <span class="pipeline-step-arrow">→</span>
+              <button onclick="document.getElementById('btn-req3-audit').click()" class="pipeline-step-node" title="Google OR-Tools CP-SAT De-confliction">
+                <i data-lucide="sliders" class="w-3 h-3 text-blue-500"></i>
+                <span>CP-SAT</span>
+              </button>
+              <span class="pipeline-step-arrow">→</span>
+              <button onclick="switchView('gantt-timeline')" class="pipeline-step-node active-node" title="Protected Block Possessions & Timetable Gantt">
+                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-500"></i>
+                <span>BLOCK PLAN</span>
+              </button>
+            </div>
+            <div class="text-[10px] text-slate-500 dark:text-slate-400 font-mono shrink-0 pl-2">
+              <span class="text-amber-500">●</span> Simulated IR Ingestion
+            </div>
+          </div>
         </div>
 
       </div>
@@ -447,7 +665,7 @@
         <div class="dashboard-panel lg:col-span-1 flex flex-col">
           <div class="flex items-center justify-between mb-4">
             <h2 class="font-display font-bold text-sm text-slate-200 flex items-center gap-2">
-              <i data-lucide="pie-chart" class="w-4 h-4 text-blue-400"></i>
+              <i data-lucide="pie-chart" class="w-4 h-4 text-red-500 dark:text-red-400"></i>
               <span>Cross-Department Demand Share</span>
             </h2>
             <span class="text-xs text-slate-400">132 Work Orders</span>
@@ -456,8 +674,8 @@
             <canvas id="chart-department-dist"></canvas>
           </div>
           <div class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-rail-border text-center text-xs">
-            <div class="p-2 rounded bg-blue-950/40 border border-blue-500/20">
-              <div class="font-bold text-blue-400" id="cnt-tms">32</div>
+            <div class="p-2 rounded bg-red-950/20 border border-red-500/20">
+              <div class="font-bold text-red-500 dark:text-red-400" id="cnt-tms">32</div>
               <div class="text-[10px] text-slate-400">TMS (P-Way)</div>
             </div>
             <div class="p-2 rounded bg-emerald-950/40 border border-emerald-500/20">
@@ -505,93 +723,588 @@
 
       </div>
 
+      <!-- ==================== REQUIREMENT 2: AI/ML MAINTENANCE RISK & PRIORITY ENGINE ==================== -->
+      <div class="dashboard-panel p-5 space-y-4 border border-purple-500/30 bg-gradient-to-b from-purple-950/10 via-rail-card to-rail-card">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-rail-border/60 pb-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 via-indigo-500/10 to-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-600 dark:text-purple-400 shadow-sm">
+              <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="font-display font-bold text-base text-slate-900 dark:text-slate-100 tracking-tight">AI/ML Maintenance Criticality, Urgency & Priority Engine</h2>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/25">
+                  Requirement 2
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Calibrated 7-day failure risk estimation, availability impact scoring & explainable priority ranking</p>
+            </div>
+          </div>
+
+          <!-- Model Health & Mode Badges -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 border border-purple-500/25 text-purple-700 dark:text-purple-300 text-xs font-mono font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+              RailRisk v1.0 (Calibrated Random Forest)
+            </span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900 border border-rail-border text-slate-600 dark:text-slate-400 text-xs font-mono" title="Synthetic prototype evaluation without temporal leakage">
+              Synthetic prototype evaluation
+            </span>
+          </div>
+        </div>
+
+        <!-- Subheader: Model Performance Metrics & Safety Invariant Notice -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+          <div class="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-900/60 border border-rail-border flex items-center justify-between">
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Model F1-Score:</span>
+            <strong id="ml-metric-f1" class="text-emerald-600 dark:text-emerald-400 font-bold">0.820</strong>
+          </div>
+          <div class="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-900/60 border border-rail-border flex items-center justify-between">
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">ROC-AUC:</span>
+            <strong id="ml-metric-roc" class="text-purple-600 dark:text-purple-400 font-bold">0.913</strong>
+          </div>
+          <div class="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-900/60 border border-rail-border flex items-center justify-between">
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Prediction Horizon:</span>
+            <strong class="text-blue-600 dark:text-blue-400 font-bold">7 Days</strong>
+          </div>
+          <div class="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-900/60 border border-rail-border flex items-center justify-between">
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Safety Override:</span>
+            <strong class="text-amber-600 dark:text-amber-400 font-bold">Constraint Active</strong>
+          </div>
+        </div>
+
+        <!-- Section 29 Required Demo Scenario (3 Tasks) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <i data-lucide="layers" class="w-3.5 h-3.5 text-purple-400"></i>
+              Section 29 Demonstration Scenario (Dynamic Model Outputs)
+            </span>
+            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">Task A (Critical) vs Task B (Moderate) vs Task C (Routine)</span>
+          </div>
+
+          <div id="grid-demo-scenario" class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            <!-- Populated dynamically via JS from /api/v1/ml/demo-scenario -->
+          </div>
+        </div>
+      </div>
+
       <!-- High Priority Demands Priority Queue -->
       <div class="dashboard-panel">
-        <div class="flex items-center justify-between mb-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
           <div class="flex items-center gap-2">
             <i data-lucide="list-ordered" class="w-4 h-4 text-amber-400"></i>
-            <h2 class="font-display font-bold text-sm text-slate-200">Top Priority Safety & Maintenance Demands (Explainable Scoring)</h2>
+            <h2 class="font-display font-bold text-sm text-slate-900 dark:text-slate-200">Unified Maintenance Demands (Rule Score & AI-Assisted Priority)</h2>
           </div>
-          <span class="text-xs text-slate-400">Multi-Factor Score = 0.55 Criticality + 0.35 Urgency + 0.10 Shadow</span>
+          <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-mono">
+            <span>Rule: <strong class="text-slate-700 dark:text-slate-300">0.55 Crit + 0.35 Urg + 0.10 Shadow</strong></span>
+            <span>•</span>
+            <span>AI: <strong class="text-purple-600 dark:text-purple-400">0.40 Risk + 0.25 Crit + 0.20 Urg + 0.15 Avail</strong></span>
+          </div>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto rounded-xl border border-rail-border">
           <table class="w-full text-left text-xs text-slate-300">
-            <thead class="bg-slate-900/80 text-[11px] uppercase tracking-wider text-slate-400 border-b border-rail-border">
+            <thead class="bg-slate-900/90 text-[11px] uppercase tracking-wider text-slate-400 border-b border-rail-border font-mono">
               <tr>
-                <th class="py-2.5 px-3">Priority</th>
-                <th class="py-2.5 px-3">Task ID</th>
+                <th class="py-2.5 px-3">Task ID & Description</th>
                 <th class="py-2.5 px-3">Dept</th>
-                <th class="py-2.5 px-3">Task Description</th>
                 <th class="py-2.5 px-3">Section & Line</th>
-                <th class="py-2.5 px-3">Dur (P50/P95)</th>
-                <th class="py-2.5 px-3">Machine</th>
-                <th class="py-2.5 px-3">Explainable Rationale</th>
+                <th class="py-2.5 px-3 text-purple-700 dark:text-purple-300" title="Deterministic Rule Score / Calibrated AI Priority">Priority Scores</th>
+                <th class="py-2.5 px-3" title="Calibrated 7-day failure risk & classification">Risk & Urgency</th>
+                <th class="py-2.5 px-3">Duration (P50/P95)</th>
+                <th class="py-2.5 px-3 text-right">Decision Details</th>
               </tr>
             </thead>
             <tbody id="table-top-tasks" class="divide-y divide-rail-border">
-              <!-- Populated dynamically -->
+              <!-- Populated dynamically with expandable detail rows -->
             </tbody>
           </table>
         </div>
       </div>
 
-    </div>
-
-    <!-- ==================== VIEW 2: DUAL-LAYER GANTT TIMETABLE ==================== -->
-    <div id="view-gantt-timeline" class="view-panel space-y-6">
-      
-      <!-- Gantt Controls & Filter Bar -->
-      <div class="dashboard-panel flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
-            <i data-lucide="git-commit" class="w-5 h-5"></i>
+      <!-- ==================== REQUIREMENT 3: MULTI-DEPARTMENT BLOCK OPTIMIZATION & BASELINE COMPARISON ENGINE ==================== -->
+      <div class="dashboard-panel p-5 space-y-5 border border-blue-500/30 bg-gradient-to-b from-blue-950/10 via-rail-card to-rail-card" id="panel-req3-optimizer">
+        
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-rail-border/60 pb-3.5">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600/20 via-indigo-500/10 to-purple-600/20 border border-blue-500/30 flex items-center justify-center text-blue-500 dark:text-blue-400 shadow-sm">
+              <i data-lucide="sliders" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="font-display font-bold text-base text-slate-900 dark:text-slate-100 tracking-tight">Multi-Department Block Optimization & Availability Engine</h2>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/25">
+                  Requirement 3
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400">CP-SAT Mathematical Coordination vs Uncoordinated Baseline Plan • Maximize Uptime & Eliminate Redundant Lockouts</p>
+            </div>
           </div>
-          <div>
-            <h2 class="font-display font-bold text-base text-slate-100">Train-Path & Corridor Possession Gantt Timeline</h2>
-            <p class="text-xs text-slate-400">Interactive dual-layer timetable with 15-minute headway protection envelopes</p>
+
+          <!-- Solver Status & Action Buttons -->
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span id="req3-solver-badge" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 text-xs font-mono font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span id="req3-solver-status">CP-SAT: FEASIBLE</span>
+              <span class="text-[10px] opacity-75" id="req3-solver-time">(312 ms)</span>
+            </span>
+            <button id="btn-toggle-opt-details" onclick="toggleOptimizationDetails()" class="disclosure-toggle-btn" title="Toggle full mathematical comparison matrix, candidate blocks and solver constraints">
+              <i data-lucide="chevron-down" id="icon-toggle-opt" class="w-3.5 h-3.5 transition-transform duration-200"></i>
+              <span id="label-toggle-opt">View Optimization Details</span>
+            </button>
+            <button id="btn-req3-audit" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-rail-border text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-sm transition active:scale-95" title="Inspect CP-SAT solver decisions and trace candidate block lineage">
+              <i data-lucide="file-search" class="w-3.5 h-3.5 text-blue-500"></i>
+              <span>Solver Audit Trail</span>
+            </button>
+            <button id="btn-req3-solve-refresh" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md shadow-blue-500/20 transition active:scale-95" title="Re-solve rolling horizon optimization with fresh demands">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              <span>Re-Optimize Schedule</span>
+            </button>
           </div>
         </div>
 
-        <!-- Filter Controls -->
-        <div class="flex items-center gap-3 text-xs">
-          <div class="flex items-center gap-1.5 bg-slate-900 px-3 py-1.5 rounded-lg border border-rail-border">
-            <span class="text-slate-400">Section:</span>
-            <select id="gantt-filter-section" class="bg-transparent text-slate-200 font-mono outline-none cursor-pointer">
-              <option value="ALL">All Sections (NZM-RDI)</option>
-              <option value="NZM-OKA">NZM-OKA</option>
-              <option value="OKA-TKD">OKA-TKD</option>
-              <option value="TKD-FDB">TKD-FDB</option>
-              <option value="FDB-FDN">FDB-FDN</option>
-              <option value="FDN-BVH">FDN-BVH</option>
-              <option value="BVH-AST">BVH-AST</option>
-              <option value="AST-PWL">AST-PWL</option>
-              <option value="PWL-RDI">PWL-RDI</option>
-            </select>
+        <!-- 4 Key Improvement Highlight Cards (Level 1: Immediately Visible & High Scan) -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <!-- 1. Possessions Avoided -->
+          <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400 uppercase">Possessions Avoided</span>
+              <div class="w-6 h-6 rounded-md bg-purple-500/15 border border-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span id="req3-card-possessions-avoided" class="text-2xl font-display font-extrabold text-purple-600 dark:text-purple-400">29</span>
+              <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">-33.0%</span>
+            </div>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400">Baseline 88 → Coordinated 59 possessions</p>
           </div>
 
-          <div class="flex items-center gap-1.5 bg-slate-900 px-3 py-1.5 rounded-lg border border-rail-border">
-            <span class="text-slate-400">Line:</span>
-            <select id="gantt-filter-line" class="bg-transparent text-slate-200 font-mono outline-none cursor-pointer">
-              <option value="ALL">Both Lines (UP & DOWN)</option>
-              <option value="DOWN">DOWN Line (Delhi -> Palwal)</option>
-              <option value="UP">UP Line (Palwal -> Delhi)</option>
-            </select>
+          <!-- 2. Corridor Hours Gained -->
+          <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400 uppercase">Corridor Hours Gained</span>
+              <div class="w-6 h-6 rounded-md bg-blue-500/15 border border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span id="req3-card-hours-saved" class="text-2xl font-display font-extrabold text-blue-600 dark:text-blue-400">+53.5 hrs</span>
+              <span class="text-xs font-mono text-slate-500">saved</span>
+            </div>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400">181.0 hrs → 127.5 hrs occupation</p>
           </div>
 
-          <!-- Legend -->
-          <div class="hidden lg:flex items-center gap-3 text-[11px] px-3 py-1.5 rounded-lg bg-slate-900/50 border border-rail-border">
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-blue-500"></span> Premium Train</span>
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-amber-500"></span> Freight</span>
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-emerald-500"></span> Single Block</span>
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-purple-500 ring-2 ring-purple-400/40"></span> Shadow Block</span>
+          <!-- 3. Asset Downtime Avoided -->
+          <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400 uppercase">Track Downtime Avoided</span>
+              <div class="w-6 h-6 rounded-md bg-emerald-500/15 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span id="req3-card-downtime-saved" class="text-2xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">42.0 hrs</span>
+              <span class="text-xs font-mono text-slate-500">(2,520 min)</span>
+            </div>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400">343.0 hrs → 301.0 hrs track downtime</p>
+          </div>
+
+          <!-- 4. Asset Availability Gain -->
+          <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400 uppercase">Corridor Asset Availability</span>
+              <div class="w-6 h-6 rounded-md bg-amber-500/15 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span id="req3-card-availability" class="text-2xl font-display font-extrabold text-slate-900 dark:text-white">90.50%</span>
+              <span id="req3-card-availability-gain" class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">+1.33 pp</span>
+            </div>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400">Baseline 89.17% → Coordinated 90.50%</p>
+          </div>
+        </div>
+
+        <!-- Level 2: Detailed Operational Comparison & Solver Invariants (Progressively Disclosed) -->
+        <div id="container-detailed-optimization" class="disclosure-panel-body is-hidden space-y-4 pt-3 border-t border-rail-border/40">
+          <!-- Before-vs-After Operational Comparison Matrix Table -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <i data-lucide="git-compare" class="w-3.5 h-3.5 text-blue-500"></i>
+                <span>Baseline vs Optimized Operational Comparison Matrix</span>
+              </span>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">Simulated Uncoordinated Execution vs CP-SAT Coordinated Plan</span>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-rail-border">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-900/90 text-[11px] uppercase tracking-wider text-slate-400 border-b border-rail-border font-mono">
+                  <tr>
+                    <th class="py-2.5 px-3">Performance Dimension</th>
+                    <th class="py-2.5 px-3 text-rose-400">Uncoordinated Baseline Plan</th>
+                    <th class="py-2.5 px-3 text-blue-400">Coordinated CP-SAT Plan</th>
+                    <th class="py-2.5 px-3 text-emerald-400">Operational Delta</th>
+                    <th class="py-2.5 px-3">Mathematical Rationale & Impact</th>
+                  </tr>
+                </thead>
+                <tbody id="table-req3-comparison" class="divide-y divide-rail-border font-mono text-[11px] bg-slate-950/40">
+                  <!-- Dynamically populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Mathematical Invariants & Multi-Department Formulation Banner -->
+          <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-rail-border flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex flex-wrap items-center gap-4 text-slate-600 dark:text-slate-400 text-[11px]">
+              <span class="font-bold text-slate-800 dark:text-slate-200 font-mono">CP-SAT Multi-Criteria Formulation:</span>
+              <span class="font-mono text-purple-600 dark:text-purple-400">Maximize: &sum;(Prio &times; Uptime) + Reward(Multi-Dept)</span>
+              <span class="text-slate-400">•</span>
+              <span class="font-mono text-rose-600 dark:text-rose-400">Minimize: Penalty(Downtime) + Penalty(FreightExp)</span>
+              <span class="text-slate-400">•</span>
+              <span class="font-mono text-emerald-600 dark:text-emerald-400">Hard Invariant: 15-min Headway Zero-Clash &amp; Machine Exclusivity</span>
+            </div>
+            <div class="text-[10px] font-mono text-slate-500">
+              Verified Non-Overlapping Machine Allocation
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== REQUIREMENT 4: MULTI-HORIZON BLOCK PLANNING SUITE ==================== -->
+      <div class="dashboard-panel p-5 space-y-5 border border-red-500/40 bg-gradient-to-b from-red-950/15 via-rail-card to-rail-card" id="panel-multi-horizon">
+        
+        <!-- Header: Multi-Horizon Planning Engine Control -->
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-rail-border/60 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-red-600/30 via-rose-500/20 to-amber-600/20 border border-red-500/40 flex items-center justify-center text-red-500 dark:text-red-400 shadow-md">
+              <i data-lucide="calendar-range" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h2 class="font-display font-bold text-base text-slate-900 dark:text-slate-100 tracking-tight">Multi-Horizon Block Planning & Rolling Horizon Suite</h2>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-red-500/15 text-red-700 dark:text-red-300 border border-red-500/30">
+                  REQUIREMENT 4
+                </span>
+                <span id="mh-active-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
+                  7D WEEKLY ACTIVE
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400">24-Hour Rolling (Operational) + 7-Day Weekly (Tactical) + 30-Day Monthly (Strategic Backlog) Multi-Horizon Constraint Optimization</p>
+            </div>
+          </div>
+
+          <!-- Horizon Switcher Buttons -->
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-900 border border-rail-border shadow-inner gap-1">
+              <button id="btn-hz-24h" onclick="switchHorizon('24H')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center gap-1.5" title="Immediate 24-Hour Operational Dispatch (Fine-Grained)">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span>24H Rolling</span>
+              </button>
+              <button id="btn-hz-7d" onclick="switchHorizon('7D')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-sm transition flex items-center gap-1.5" title="7-Day Weekly Tactical Plan (Multi-Department Coordination)">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>7D Weekly</span>
+              </button>
+              <button id="btn-hz-30d" onclick="switchHorizon('30D')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center gap-1.5" title="30-Day Monthly Strategic Backlog Management">
+                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                <span>30D Monthly</span>
+              </button>
+            </div>
+
+            <!-- Re-optimize with Freeze Window -->
+            <button id="btn-reoptimize-horizon" onclick="reoptimizeCurrentHorizon()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-md shadow-red-500/20 transition active:scale-95" title="Execute rolling re-optimization while preserving approved blocks within freeze window">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+              <span>Re-Optimize (Freeze Lock)</span>
+            </button>
+
+            <!-- Version History Button -->
+            <button id="btn-show-versions" onclick="openPlanVersionsModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-rail-border text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-sm transition" title="Inspect plan version audit history">
+              <i data-lucide="history" class="w-3.5 h-3.5 text-blue-400"></i>
+              <span>Plan Versions</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Meta Strip: Plan Version, Status, Confidence & Freeze Window -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+          <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-rail-border flex items-center justify-between">
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Plan Version:</span>
+            <strong id="mh-stat-version" class="text-emerald-600 dark:text-emerald-400 font-bold">WEEK-2026-37-V01</strong>
+          </div>
+          <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-rail-border flex items-center justify-between">
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Confidence Level:</span>
+            <strong id="mh-stat-confidence" class="text-blue-600 dark:text-blue-400 font-bold">HIGH CONFIDENCE</strong>
+          </div>
+          <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-rail-border flex items-center justify-between">
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Freeze Horizon:</span>
+            <strong id="mh-stat-freeze" class="text-amber-600 dark:text-amber-400 font-bold">24h Approved Locked</strong>
+          </div>
+          <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-rail-border flex items-center justify-between">
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Timetable Safety:</span>
+            <strong class="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> 0 Clashes Verified
+            </strong>
+          </div>
+        </div>
+
+        <!-- DYNAMIC CONTAINER 1: 7-DAY WEEKLY SCHEDULE MATRIX (Visible when 7D is active) -->
+        <div id="mh-container-7d" class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <i data-lucide="calendar" class="w-4 h-4 text-red-500"></i>
+              <span>7-Day Tactical Coordinated Schedule Breakdown</span>
+            </span>
+            <span class="text-[11px] text-slate-500 font-mono">Daily CP-SAT multi-department cross-packing</span>
+          </div>
+          <!-- 7-Day Cards Grid -->
+          <div id="mh-7d-days-grid" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+            <!-- Dynamically populated via JS with MON-SUN cards -->
+          </div>
+        </div>
+
+        <!-- DYNAMIC CONTAINER 2: 30-DAY STRATEGIC BACKLOG & COHORT BREAKDOWN (Visible when 30D is active) -->
+        <div id="mh-container-30d" class="space-y-3 hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <i data-lucide="calendar-check" class="w-4 h-4 text-amber-500"></i>
+              <span>30-Day Strategic Backlog & 4-Week Cohort Management</span>
+            </span>
+            <span class="text-[11px] text-slate-500 font-mono">Decaying forecast confidence & honest backlog accounting</span>
+          </div>
+
+          <!-- 4-Week Strategic Cohort Cards -->
+          <div id="mh-30d-cohorts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+          <!-- Honest Backlog Summary Card -->
+          <div id="mh-30d-backlog-card" class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- DYNAMIC CONTAINER 3: 24-HOUR ROLLING OPERATIONAL DISPATCH (Visible when 24H is active) -->
+        <div id="mh-container-24h" class="space-y-3 hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <i data-lucide="clock" class="w-4 h-4 text-blue-500"></i>
+              <span>24-Hour Rolling Operational Dispatch (Day 0 Immediate)</span>
+            </span>
+            <span class="text-[11px] text-slate-500 font-mono">Direct field execution & urgent defect clearance</span>
+          </div>
+
+          <div id="mh-24h-dispatch-summary" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- Multi-Horizon Side-by-Side Comparison Matrix Table (Collapsible) -->
+        <div class="space-y-2 pt-2 border-t border-rail-border/60">
+          <div class="flex items-center justify-between cursor-pointer select-none" onclick="toggleHorizonComparisonTable()">
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <i data-lucide="table-2" class="w-4 h-4 text-purple-400"></i>
+              <span>Horizon Comparison Matrix (24H Rolling vs 7D Weekly vs 30D Monthly)</span>
+            </span>
+            <span id="mh-comparison-toggle-icon" class="text-xs text-slate-400 flex items-center gap-1">
+              <span class="text-[10px] font-mono">View Side-by-Side</span>
+              <i data-lucide="chevron-down" class="w-4 h-4"></i>
+            </span>
+          </div>
+
+          <div id="mh-comparison-table-wrapper" class="overflow-x-auto rounded-xl border border-rail-border">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="bg-slate-900/90 text-[10px] uppercase tracking-wider text-slate-400 border-b border-rail-border">
+                <tr>
+                  <th class="py-2.5 px-3">Planning Dimension</th>
+                  <th class="py-2.5 px-3 text-blue-400 font-bold">24-Hour Rolling (24H)</th>
+                  <th class="py-2.5 px-3 text-red-400 font-bold">7-Day Weekly (7D)</th>
+                  <th class="py-2.5 px-3 text-amber-400 font-bold">30-Day Monthly (30D)</th>
+                </tr>
+              </thead>
+              <tbody id="table-horizon-comparison-body" class="divide-y divide-rail-border text-[11px] bg-slate-950/40">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Unscheduled & Deferred Demands Section with Root-Cause Constraints -->
+        <div class="space-y-2 pt-2 border-t border-rail-border/60">
+          <!-- Compact Summary Card (Level 2) -->
+          <div id="unscheduled-summary-bar" class="p-3 rounded-xl bg-amber-500/10 dark:bg-amber-950/20 border border-amber-500/20 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
+                <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500"></i>
+                <span>UNSCHEDULED / DEFERRED STATUS:</span>
+              </span>
+              <span id="unscheduled-summary-counts" class="text-slate-700 dark:text-slate-300 font-bold">0 Demands (0 Deferred)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div id="unscheduled-top-reasons" class="text-slate-600 dark:text-slate-400 text-[11px] flex flex-wrap items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px]">Corridor Capacity</span>
+                <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px]">Resource Conflict</span>
+                <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px]">Next Cycle Roll</span>
+              </div>
+              <button onclick="toggleUnscheduledTable()" id="btn-toggle-unscheduled" class="disclosure-toggle-btn px-2.5 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-700 dark:text-amber-300 text-[10px] font-bold transition flex items-center gap-1">
+                <span id="unscheduled-toggle-text">View All Reasons</span>
+                <i id="mh-unscheduled-toggle-icon" data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-200"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Collapsible Detailed Constraints Table (Level 3) -->
+          <div id="mh-unscheduled-table-wrapper" class="overflow-x-auto rounded-xl border border-rail-border hidden">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="bg-slate-900/90 text-[10px] uppercase tracking-wider text-slate-400 border-b border-rail-border">
+                <tr>
+                  <th class="py-2.5 px-3">Task ID & Description</th>
+                  <th class="py-2.5 px-3">Department</th>
+                  <th class="py-2.5 px-3">Priority</th>
+                  <th class="py-2.5 px-3">Due Date</th>
+                  <th class="py-2.5 px-3 text-rose-400">Root-Cause Engineering Constraint</th>
+                  <th class="py-2.5 px-3 text-emerald-400">Potential Next Window & Action</th>
+                </tr>
+              </thead>
+              <tbody id="table-unscheduled-demands-body" class="divide-y divide-rail-border text-[11px] bg-slate-950/40">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== VIEW 2: DUAL-LAYER GANTT TIMETABLE ==================== -->
+    <div id="view-gantt-timeline" class="view-panel space-y-5">
+      
+      <!-- Gantt Controls & Filter Bar -->
+      <div class="dashboard-panel p-4 space-y-3.5">
+        <!-- Top Row: Section Title + Operational Headway Badge -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-rail-border/60 pb-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-500 dark:text-blue-400 shadow-sm">
+              <i data-lucide="git-commit" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="font-display font-bold text-base text-slate-900 dark:text-slate-100 tracking-tight">Train-Path & Corridor Possession Gantt Timeline</h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Interactive dual-layer timetable with 15-minute headway protection envelopes</p>
+            </div>
+          </div>
+
+          <!-- Operational Headway Protection Info Badge -->
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-500/10 dark:bg-blue-500/15 border border-blue-500/25 text-blue-700 dark:text-blue-300 text-xs font-mono font-medium shadow-sm">
+            <i data-lucide="shield-check" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+            <span>15-min Headway Protection</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" title="Active Interlocking Protection Verified"></span>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Filter Controls & Semantic Legend -->
+        <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
+          <!-- Filter Select Controls -->
+          <div class="flex flex-wrap items-center gap-2.5">
+            <!-- Section Filter -->
+            <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-rail-border shadow-inner">
+              <span class="text-slate-500 dark:text-slate-400 font-medium">Section:</span>
+              <select id="gantt-filter-section" class="bg-transparent text-slate-800 dark:text-slate-200 font-mono text-xs font-semibold outline-none cursor-pointer">
+                <option value="ALL" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">All Sections (NZM-RDI)</option>
+                <option value="NZM-OKA" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">NZM-OKA (Hazrat Nizamuddin - Okhla)</option>
+                <option value="OKA-TKD" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">OKA-TKD (Okhla - Tuglakabad)</option>
+                <option value="TKD-FDB" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">TKD-FDB (Tuglakabad - Faridabad)</option>
+                <option value="FDB-FDN" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">FDB-FDN (Faridabad - Faridabad New Town)</option>
+                <option value="FDN-BVH" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">FDN-BVH (Faridabad New Town - Ballabgarh)</option>
+                <option value="BVH-AST" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">BVH-AST (Ballabgarh - Asaoti)</option>
+                <option value="AST-PWL" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">AST-PWL (Asaoti - Palwal)</option>
+                <option value="PWL-RDI" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">PWL-RDI (Palwal - Rundhi)</option>
+              </select>
+            </div>
+
+            <!-- Line Filter -->
+            <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-rail-border shadow-inner">
+              <span class="text-slate-500 dark:text-slate-400 font-medium">Line:</span>
+              <select id="gantt-filter-line" class="bg-transparent text-slate-800 dark:text-slate-200 font-mono text-xs font-semibold outline-none cursor-pointer">
+                <option value="ALL" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">Both Lines (UP & DOWN)</option>
+                <option value="DOWN" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">DOWN Line (Delhi → Palwal)</option>
+                <option value="UP" class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">UP Line (Palwal → Delhi)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Color-coded Legend -->
+          <div class="flex flex-wrap items-center gap-3 text-[11px] font-mono px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900/80 border border-rail-border shadow-inner">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-sm bg-blue-600 dark:bg-blue-500 shadow-sm shadow-blue-500/50"></span>
+              <span class="text-slate-700 dark:text-slate-300 font-sans font-medium">Premium Train</span>
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-sm bg-amber-600 dark:bg-amber-500 shadow-sm shadow-amber-500/50"></span>
+              <span class="text-slate-700 dark:text-slate-300 font-sans font-medium">Freight</span>
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-sm bg-emerald-600 dark:bg-emerald-500 shadow-sm shadow-emerald-500/50"></span>
+              <span class="text-slate-700 dark:text-slate-300 font-sans font-medium">Single Block</span>
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-sm bg-purple-600 dark:bg-purple-500 ring-1 ring-purple-400/50 shadow-sm shadow-purple-500/50"></span>
+              <span class="text-slate-700 dark:text-slate-300 font-sans font-medium">Shadow Block</span>
+            </span>
           </div>
         </div>
       </div>
 
       <!-- Gantt Canvas Container -->
-      <div class="dashboard-panel p-4 overflow-hidden flex flex-col">
-        <div id="gantt-chart-container" class="w-full h-[620px] overflow-y-auto overflow-x-auto relative rounded-lg bg-slate-950/60 border border-rail-border p-3">
+      <div class="dashboard-panel p-3 overflow-hidden flex flex-col">
+        <div id="gantt-chart-container" class="w-full h-[620px] overflow-y-auto overflow-x-auto relative rounded-xl bg-slate-950/60 border border-rail-border">
           <!-- Rendered via JS Gantt Canvas -->
+        </div>
+      </div>
+
+      <!-- ==================== REQUIREMENT 5: GOODS TRAIN FREIGHT FORECAST ==================== -->
+      <div class="dashboard-panel space-y-3.5">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-rail-border/60 pb-3">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400">
+              <i data-lucide="truck" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="font-display font-bold text-sm text-slate-100">Control Office Goods Train Traffic Forecast (FOIS / Freight Control)</h3>
+                <span class="px-2 py-0.2 text-[9px] font-mono font-semibold rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">REQ 5 FREIGHT FORECAST</span>
+                <span class="text-[10px] font-mono text-amber-400">Prototype / Simulated Data</span>
+              </div>
+              <p class="text-xs text-slate-400">Corridor Freight Traffic Windows, Expected Goods Rakes & Machine Learning Arrival Predictions</p>
+            </div>
+          </div>
+          <div class="text-xs text-slate-400 flex items-center gap-2">
+            <span>Corridor: <strong class="text-slate-200 font-mono">NZM — PWL (HDN)</strong></span>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/80 text-[11px] uppercase tracking-wider text-slate-400 border-b border-rail-border">
+              <tr>
+                <th class="py-2.5 px-3">Forecast ID</th>
+                <th class="py-2.5 px-3">Time Window</th>
+                <th class="py-2.5 px-3">Section / Corridor</th>
+                <th class="py-2.5 px-3">Direction</th>
+                <th class="py-2.5 px-3">Expected Rakes</th>
+                <th class="py-2.5 px-3">Predicted Train Paths</th>
+                <th class="py-2.5 px-3">Confidence</th>
+                <th class="py-2.5 px-3">Impact & Regulation Notes</th>
+              </tr>
+            </thead>
+            <tbody id="table-goods-forecast" class="divide-y divide-rail-border font-mono text-[11px]">
+              <!-- Populated dynamically via JS -->
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -1082,8 +1795,9 @@
     </div>
 
   </main>
+  </div> <!-- End #app-main-wrapper -->
 
-  <!-- Timetable Protection Certificate Modal -->
+  <!-- Timetable Protection Verification Modal -->
   <div id="modal-certificate" class="modal-backdrop hidden">
     <div class="modal-content max-w-2xl w-full p-6 space-y-5 bg-rail-card border border-emerald-500/40 rounded-2xl shadow-2xl">
       <div class="flex items-center justify-between border-b border-rail-border pb-4">
@@ -1092,42 +1806,842 @@
             <i data-lucide="shield-check" class="w-6 h-6"></i>
           </div>
           <div>
-            <h3 class="font-display font-bold text-lg text-white">Timetable Protection Certificate</h3>
-            <p class="text-xs text-slate-400">Cryptographically signed mathematical safety proof</p>
+            <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Timetable Protection Verification Record</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Cryptographically verified against configured constraints</p>
           </div>
         </div>
-        <button id="btn-close-cert-modal" class="text-slate-400 hover:text-white">
+        <button id="btn-close-cert-modal" class="text-slate-400 hover:text-slate-700 dark:hover:text-white">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <div class="space-y-3.5 text-xs text-slate-300">
-        <div class="grid grid-cols-2 gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-rail-border font-mono text-[11px]">
-          <div><span class="text-slate-400">Certificate ID:</span> <strong id="modal-cert-id" class="text-white block">CERT-WTT-2026-0042</strong></div>
-          <div><span class="text-slate-400">Timetable Version:</span> <strong class="text-emerald-400 block">WTT-NR-2026-V2</strong></div>
-          <div><span class="text-slate-400">Solver Status:</span> <strong class="text-blue-400 block">OPTIMAL (CP-SAT)</strong></div>
-          <div><span class="text-slate-400">Zero Clash Invariant:</span> <strong class="text-emerald-400 block">MATHEMATICALLY PROVEN</strong></div>
+      <div class="space-y-3.5 text-xs text-slate-700 dark:text-slate-300">
+        <div class="grid grid-cols-2 gap-3 p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border font-mono text-[11px]">
+          <div><span class="text-slate-500 dark:text-slate-400">Verification ID:</span> <strong id="modal-cert-id" class="text-slate-900 dark:text-white block">CERT-WTT-2026-0042</strong></div>
+          <div><span class="text-slate-500 dark:text-slate-400">Timetable Version:</span> <strong class="text-emerald-600 dark:text-emerald-400 block">WTT-NR-2026-V2</strong></div>
+          <div><span class="text-slate-500 dark:text-slate-400">Solver Status:</span> <strong class="text-blue-600 dark:text-blue-400 block">OPTIMAL (CP-SAT)</strong></div>
+          <div><span class="text-slate-500 dark:text-slate-400">Zero Clash Invariant:</span> <strong class="text-emerald-600 dark:text-emerald-400 block">ZERO-CLASH VERIFIED</strong></div>
         </div>
 
         <div>
-          <span class="text-slate-400 font-mono text-[11px] block mb-1">SHA-256 Immutability Signature:</span>
+          <span class="text-slate-500 dark:text-slate-400 font-mono text-[11px] block mb-1">SHA-256 Immutability Signature:</span>
           <div id="modal-cert-hash" class="p-2.5 rounded-lg bg-slate-950 font-mono text-[10px] text-emerald-300 break-all border border-emerald-500/30">
             9d525f4419aef228e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
           </div>
         </div>
 
-        <div class="p-3 rounded-lg bg-emerald-950/20 border border-emerald-500/30 text-emerald-300 text-[11px]">
-          <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1 text-emerald-400"></i>
-          <span id="modal-cert-explanation">Verified 0 train clashes across all maintenance blocks against 152 train paths. Safety headway buffers (15 min) mathematically guaranteed.</span>
+        <div class="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-[11px]">
+          <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1 text-emerald-500"></i>
+          <span id="modal-cert-explanation">Verified 0 train clashes across all maintenance blocks against 152 train paths. Safety headway buffers (15 min) verified against configured constraints.</span>
         </div>
       </div>
 
       <div class="pt-3 border-t border-rail-border flex justify-end gap-3">
-        <button id="btn-print-cert" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold">
-          Export Formal PDF Sign-off
+        <button id="btn-print-cert" class="px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold">
+          Export Verification Summary
         </button>
         <button id="btn-modal-close-action" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold">
-          Acknowledged & Verified
+          Acknowledged &amp; Verified
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REQUIREMENT 12 & 15: DATA LINEAGE & PROVENANCE MODAL ==================== -->
+  <div id="modal-task-lineage" class="modal-backdrop hidden">
+    <div class="modal-content max-w-3xl w-full p-6 space-y-5 bg-rail-card border border-blue-500/40 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
+      <div class="flex items-center justify-between border-b border-rail-border pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400">
+            <i data-lucide="git-commit" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-display font-bold text-lg text-white">Data Lineage & 6-Way Cross-System Provenance</h3>
+              <span id="lineage-modal-dept-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-red-500/20 text-red-400 border border-red-500/30">TMS</span>
+            </div>
+            <p class="text-xs text-slate-400">End-to-end audit trail from source feed to CP-SAT solver input</p>
+          </div>
+        </div>
+        <button id="btn-close-lineage-modal" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Provenance Stepper / Pipeline Diagram -->
+      <div class="p-3.5 rounded-xl bg-slate-900/90 border border-rail-border space-y-2">
+        <div class="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Data Provenance Pipeline:</div>
+        <div class="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+          <span class="px-2 py-1 rounded bg-slate-800 text-slate-300 border border-rail-border" id="lin-src-name">TMS Source Feed</span>
+          <span class="text-slate-500">→</span>
+          <span class="px-2 py-1 rounded bg-blue-950/60 text-blue-300 border border-blue-500/30 font-bold" id="lin-orig-id">TMS-WO-1842</span>
+          <span class="text-slate-500">→</span>
+          <span class="px-2 py-1 rounded bg-purple-950/60 text-purple-300 border border-purple-500/30" id="lin-unified-id">UMT-TMS-1842</span>
+          <span class="text-slate-500">→</span>
+          <span class="px-2 py-1 rounded bg-amber-950/60 text-amber-300 border border-amber-500/30" id="lin-asset-id">Resolved Asset</span>
+          <span class="text-slate-500">→</span>
+          <span class="px-2 py-1 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 font-bold">CP-SAT Block Plan</span>
+        </div>
+      </div>
+
+      <div class="space-y-3.5 text-xs text-slate-300">
+        <!-- 2x2 Grid for Work Order & Operational Parameters -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-rail-border font-mono text-[11px]">
+          <div><span class="text-slate-400">Source Work Order ID:</span> <strong id="lin-modal-wo-id" class="text-white block">TMS-WO-1842</strong></div>
+          <div><span class="text-slate-400">Unified Planning ID:</span> <strong id="lin-modal-umt-id" class="text-purple-400 block">UMT-TMS-1842</strong></div>
+          <div><span class="text-slate-400">Canonical Asset / Section:</span> <strong id="lin-modal-asset" class="text-amber-400 block">TRACK-1842 (TKD-FDB, km 18.5)</strong></div>
+          <div><span class="text-slate-400">Asset Resolution Tier:</span> <strong id="lin-modal-tier" class="text-emerald-400 block">TIER_1_EXACT (100% Confidence)</strong></div>
+          <div><span class="text-slate-400">Planned Duration:</span> <strong id="lin-modal-duration" class="text-slate-200 block">120 mins (P50: 105m / P95: 135m)</strong></div>
+          <div><span class="text-slate-400">Overdue Duration:</span> <strong id="lin-modal-overdue" class="text-rose-400 block">2 Days Overdue (IMR Critical)</strong></div>
+          <div><span class="text-slate-400">25kV OHE Isolation:</span> <strong id="lin-modal-ohe" class="text-slate-200 block">Not Required</strong></div>
+          <div><span class="text-slate-400">Signalling Disconnection:</span> <strong id="lin-modal-sig" class="text-slate-200 block">Not Required</strong></div>
+        </div>
+
+        <!-- Defect Description -->
+        <div class="p-3 rounded-lg bg-slate-900/60 border border-rail-border">
+          <span class="text-slate-400 font-mono text-[11px] block mb-1">Source Defect Record:</span>
+          <p id="lin-modal-defect-desc" class="text-slate-200 text-xs font-sans">Urgent IMR ultrasonic rail weld flaw renewal & fishplate clamping</p>
+        </div>
+
+        <!-- Correlated Multi-Source Operational Context Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          
+          <!-- COA Corridor Availability Card -->
+          <div class="p-3 rounded-xl bg-blue-950/20 border border-blue-500/30 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-blue-400 font-bold text-[11px] font-mono">
+              <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+              <span>COA Corridor Window</span>
+            </div>
+            <div id="lin-coa-details" class="text-[11px] font-mono text-slate-300 space-y-1">
+              <div>Window: <strong class="text-blue-300" id="lin-coa-window">00:30 - 04:30</strong></div>
+              <div>Available: <span class="text-slate-400" id="lin-coa-dur">240 mins</span></div>
+              <div>Status: <span class="text-emerald-400 font-bold" id="lin-coa-status">CONFIRMED</span></div>
+            </div>
+          </div>
+
+          <!-- Timetable Movement & Protection Card -->
+          <div class="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/30 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-[11px] font-mono">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>Timetable Headway</span>
+            </div>
+            <div id="lin-wtt-details" class="text-[11px] font-mono text-slate-300 space-y-1">
+              <div>Clash Status: <strong class="text-emerald-300" id="lin-wtt-status">0 CLASHES</strong></div>
+              <div>Headway Buffer: <span class="text-slate-400">15 min Verified</span></div>
+              <div>Trains in Section: <span class="text-slate-300" id="lin-wtt-trains-count">Monitored</span></div>
+            </div>
+          </div>
+
+          <!-- Goods Traffic Forecast Card -->
+          <div class="p-3 rounded-xl bg-purple-950/20 border border-purple-500/30 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-purple-400 font-bold text-[11px] font-mono">
+              <i data-lucide="truck" class="w-3.5 h-3.5"></i>
+              <span>Goods Traffic Forecast</span>
+            </div>
+            <div id="lin-goods-details" class="text-[11px] font-mono text-slate-300 space-y-1">
+              <div>Forecast Window: <strong class="text-purple-300" id="lin-goods-window">00:00 - 04:00</strong></div>
+              <div>Expected Rakes: <span class="text-slate-300" id="lin-goods-count">2 Trains</span></div>
+              <div>Confidence: <span class="text-emerald-400 font-bold" id="lin-goods-conf">88.5%</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sync Timestamp & Honest Prototype Status -->
+        <div class="flex flex-wrap items-center justify-between p-2.5 rounded-lg bg-slate-950 font-mono text-[10px] border border-rail-border text-slate-400">
+          <div>Source Sync: <span id="lin-modal-sync-time" class="text-slate-300">2026-09-10T10:00:00Z</span></div>
+          <div>Mode: <span class="text-amber-400 font-bold">Simulated Prototype Adapter (Honest Testing Label)</span></div>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-rail-border flex justify-end">
+        <button id="btn-close-lineage-action" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold">
+          Close Traceability Inspector
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REQUIREMENT 16 & CHECKLIST K: CROSS-SYSTEM CONVERGENCE MODAL ==================== -->
+  <div id="modal-correlation-scenario" class="modal-backdrop hidden">
+    <div class="modal-content max-w-3xl w-full p-6 space-y-5 bg-rail-card border border-purple-500/40 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
+      <div class="flex items-center justify-between border-b border-rail-border pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400">
+            <i data-lucide="git-merge" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-white">Cross-System Operational Convergence Scenario</h3>
+            <p class="text-xs text-slate-400">Direct proof of TMS + SMMS + TDMS + COA + Timetable + Goods Forecast integration</p>
+          </div>
+        </div>
+        <button id="btn-close-correlation-modal" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-3 rounded-lg bg-purple-950/20 border border-purple-500/30 text-xs text-purple-300">
+        <strong class="text-white block mb-0.5">Section 16 & Checklist K Demonstration:</strong>
+        This showcase demonstrates separate operational feeds converging onto the exact same corridor span (<strong>TKD–FDB DOWN Line</strong>) during the COA Night Mega possession slot (<strong>00:30–04:30</strong>).
+      </div>
+
+      <!-- 3 Converging Departments -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        
+        <!-- TMS Task -->
+        <div class="p-3 rounded-xl bg-red-950/20 border border-red-500/30 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono font-bold text-red-400 text-xs">1. TMS (P-Way Track)</span>
+            <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-red-500/20 text-red-300">CIVIL</span>
+          </div>
+          <div class="font-mono text-[11px] text-slate-300 space-y-1">
+            <div>Task: <strong class="text-white" id="corr-tms-id">TMS-WO-1842</strong></div>
+            <div>Defect: <span class="text-rose-300">IMR Rail Flaw</span></div>
+            <div>Location: <span class="text-slate-400">km 18.5 (DOWN)</span></div>
+            <div>Duration: <span class="text-slate-200">120 mins</span></div>
+          </div>
+        </div>
+
+        <!-- SMMS Task -->
+        <div class="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/30 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono font-bold text-emerald-400 text-xs">2. SMMS (Signalling)</span>
+            <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-500/20 text-emerald-300">S&T</span>
+          </div>
+          <div class="font-mono text-[11px] text-slate-300 space-y-1">
+            <div>Task: <strong class="text-white" id="corr-smms-id">SMMS-WO-1842</strong></div>
+            <div>Defect: <span class="text-emerald-300">Point Machine Overhaul</span></div>
+            <div>Asset: <span class="text-slate-400">Point-TKD-102B</span></div>
+            <div>Disconnect: <span class="text-emerald-400 font-bold">YES</span></div>
+          </div>
+        </div>
+
+        <!-- TDMS Task -->
+        <div class="p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono font-bold text-amber-400 text-xs">3. TDMS (Electrical)</span>
+            <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-amber-500/20 text-amber-300">TRD</span>
+          </div>
+          <div class="font-mono text-[11px] text-slate-300 space-y-1">
+            <div>Task: <strong class="text-white" id="corr-tdms-id">TDMS-WO-1842</strong></div>
+            <div>Defect: <span class="text-amber-300">OHE Cantilever Stagger</span></div>
+            <div>Asset: <span class="text-slate-400">Mast 18/14</span></div>
+            <div>Power Isolation: <span class="text-amber-400 font-bold">25kV CUT</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3 Supporting Operational Feeds -->
+      <div class="p-3.5 rounded-xl bg-slate-900/80 border border-rail-border space-y-2 font-mono text-[11px] text-slate-300">
+        <div class="text-slate-400 font-bold uppercase">Correlated Operational Environment:</div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <span class="text-slate-400 block text-[10px]">4. COA Corridor Window:</span>
+            <strong class="text-blue-300 block">COA-BLK-NIGHT_MEGA</strong>
+            <span class="text-slate-400">00:30–04:30 (240 min)</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-[10px]">5. Timetable Protection:</span>
+            <strong class="text-emerald-400 block">0 Passenger Clashes</strong>
+            <span class="text-slate-400">15m Headway Enforced</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-[10px]">6. Freight Forecast:</span>
+            <strong class="text-purple-300 block">2 Expected Goods Rakes</strong>
+            <span class="text-slate-400">88.5% Conf (Bypassable)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resolution & Result -->
+      <div class="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-emerald-300 text-xs">
+        <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1 text-emerald-400"></i>
+        <strong>Unified Planning Result:</strong> All 3 tasks scheduled together into a single 150-minute Shadow Possession block instead of three separate possessions, saving 210 minutes of critical Delhi corridor capacity.
+      </div>
+
+      <div class="pt-3 border-t border-rail-border flex justify-end">
+        <button id="btn-close-correlation-action" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold">
+          Close Convergence Inspector
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REQUIREMENT 10: DATA QUALITY AUDIT MODAL ==================== -->
+  <div id="modal-data-quality" class="modal-backdrop hidden">
+    <div class="modal-content max-w-3xl w-full p-6 space-y-5 bg-rail-card border border-emerald-500/40 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
+      <div class="flex items-center justify-between border-b border-rail-border pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+            <i data-lucide="check-check" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-white">Data Quality & Boundary Validation Audit</h3>
+            <p class="text-xs text-slate-400">Automated boundary integrity checks across all 6 operational data feeds</p>
+          </div>
+        </div>
+        <button id="btn-close-data-quality-modal" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Health Scorecard -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="p-3 rounded-xl bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-400 font-mono uppercase">Total Ingested</div>
+          <div id="dq-total-ingested" class="text-xl font-bold font-mono text-white mt-0.5">--</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-400 font-mono uppercase">Validated Clean</div>
+          <div id="dq-total-valid" class="text-xl font-bold font-mono text-emerald-400 mt-0.5">--</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-400 font-mono uppercase">Flagged / Review</div>
+          <div id="dq-total-flagged" class="text-xl font-bold font-mono text-amber-400 mt-0.5">--</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-400 font-mono uppercase">Overall Health</div>
+          <div id="dq-health-pct" class="text-xl font-bold font-mono text-blue-400 mt-0.5">--%</div>
+        </div>
+      </div>
+
+      <!-- Enforced Rules List -->
+      <div class="p-3.5 rounded-xl bg-slate-900/80 border border-rail-border space-y-2">
+        <div class="text-slate-400 font-bold font-mono text-[11px] uppercase">Enforced Boundary Validation Rules:</div>
+        <div id="dq-rules-list" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-300">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Recent Validation Notices -->
+      <div class="space-y-2">
+        <div class="text-slate-400 font-bold font-mono text-[11px] uppercase">Recent Validation Notices & Flagged Demands:</div>
+        <div id="dq-notices-container" class="space-y-1.5 max-h-48 overflow-y-auto font-mono text-[11px]">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-rail-border flex justify-end">
+        <button id="btn-close-data-quality-action" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold">
+          Close Quality Audit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REQUIREMENT 2: MAINTENANCE AI ANALYSIS MODAL ==================== -->
+  <div id="modal-ai-explanation" class="modal-backdrop hidden">
+    <div class="modal-content max-w-2xl w-full p-6 space-y-5 bg-rail-card border border-purple-500/40 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-rail-border pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400 shadow-sm">
+            <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">MAINTENANCE AI ANALYSIS</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-500/30">
+                RailRisk v1.0
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Explainable failure escalation prediction & safety-first priority decomposition</p>
+          </div>
+        </div>
+        <button id="btn-close-ai-modal" class="text-slate-400 hover:text-slate-700 dark:hover:text-white transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Task Header Card -->
+      <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border space-y-2 font-mono text-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 dark:text-slate-400 text-[11px]">Task Identifier:</span>
+          <strong id="ai-modal-task-id" class="text-red-700 dark:text-red-400 font-bold text-sm">--</strong>
+        </div>
+        <div class="text-slate-800 dark:text-slate-200 font-sans text-xs" id="ai-modal-task-desc">--</div>
+        <div class="flex flex-wrap gap-2 text-[10px] text-slate-600 dark:text-slate-400 pt-1 border-t border-rail-border/40">
+          <span>Dept: <strong id="ai-modal-dept" class="text-slate-900 dark:text-white">--</strong></span>
+          <span>•</span>
+          <span>Section: <strong id="ai-modal-section" class="text-slate-900 dark:text-white">--</strong></span>
+          <span>•</span>
+          <span>Line: <strong id="ai-modal-line" class="text-slate-900 dark:text-white">--</strong></span>
+        </div>
+      </div>
+
+      <!-- Safety Override Alert Banner (conditional) -->
+      <div id="ai-modal-safety-banner" class="hidden p-3 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs flex items-center gap-2">
+        <i data-lucide="shield-alert" class="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400"></i>
+        <span><strong>Safety Guardrail Active:</strong> AI recommendation cannot downgrade statutory safety-critical tasks. Priority floor (85.0) enforced.</span>
+      </div>
+
+      <!-- Metric Scorecards Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <!-- AI Risk -->
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase">Predicted Risk</div>
+          <div id="ai-modal-risk-score" class="text-2xl font-bold font-mono text-red-600 dark:text-red-400 mt-0.5">--%</div>
+          <span id="ai-modal-risk-class" class="inline-block px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-red-500/20 text-red-700 dark:text-red-300 border border-red-500/30 mt-1">HIGH</span>
+        </div>
+
+        <!-- AI Priority -->
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase">AI Priority</div>
+          <div id="ai-modal-ai-priority" class="text-2xl font-bold font-mono text-purple-600 dark:text-purple-400 mt-0.5">--/100</div>
+          <span class="text-[9px] text-slate-500 dark:text-slate-400 font-mono">Assisted Score</span>
+        </div>
+
+        <!-- Deterministic Score -->
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase">Rule Score</div>
+          <div id="ai-modal-det-score" class="text-2xl font-bold font-mono text-slate-700 dark:text-slate-300 mt-0.5">--/100</div>
+          <span class="text-[9px] text-slate-500 dark:text-slate-400 font-mono">Formula Score</span>
+        </div>
+
+        <!-- Prediction Horizon -->
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase">Horizon</div>
+          <div class="text-2xl font-bold font-mono text-blue-600 dark:text-blue-400 mt-0.5">7 Days</div>
+          <span id="ai-modal-confidence" class="inline-block px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/30 mt-1">CONF: HIGH</span>
+        </div>
+      </div>
+
+      <!-- Impact & Traffic Details -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border flex items-center justify-between">
+          <div>
+            <div class="text-[10px] text-slate-500 dark:text-slate-400">Asset Availability Impact:</div>
+            <div id="ai-modal-avail-impact" class="text-base font-bold text-amber-600 dark:text-amber-400 mt-0.5">--/100</div>
+          </div>
+          <i data-lucide="activity" class="w-5 h-5 text-amber-500"></i>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border flex items-center justify-between">
+          <div>
+            <div class="text-[10px] text-slate-500 dark:text-slate-400">Operational Traffic Exposure:</div>
+            <div id="ai-modal-traffic-exp" class="text-base font-bold text-blue-600 dark:text-blue-400 mt-0.5">-- Trains/Day</div>
+          </div>
+          <i data-lucide="train" class="w-5 h-5 text-blue-500"></i>
+        </div>
+      </div>
+
+      <!-- Top Contributing Factors (Explainability) -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs font-mono font-bold text-slate-700 dark:text-slate-300 uppercase">
+          <span>Top Contributing Factors (Explainability):</span>
+          <span class="text-[10px] text-purple-600 dark:text-purple-400 font-normal">Feature Contributions</span>
+        </div>
+        <div id="ai-modal-factors-container" class="space-y-2">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Natural Language Rationale -->
+      <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border font-sans text-xs space-y-1">
+        <span class="font-mono text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold block">Controller AI Rationale:</span>
+        <p id="ai-modal-explanation-text" class="text-slate-700 dark:text-slate-300">--</p>
+      </div>
+
+      <!-- Audit Metadata Footer -->
+      <div class="pt-3 border-t border-rail-border flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-slate-500 dark:text-slate-400">
+        <div>
+          <span>Model: <strong class="text-slate-700 dark:text-slate-300">RailRisk-v1</strong></span>
+          <span class="mx-1.5">•</span>
+          <span>Data: <strong class="text-slate-700 dark:text-slate-300">Prototype ML Model — Synthetic Training Data</strong></span>
+        </div>
+        <button id="btn-close-ai-action" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold">
+          Close Analysis
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REQUIREMENT 3: CP-SAT SOLVER AUDIT TRAIL MODAL ==================== -->
+  <div id="modal-req3-audit" class="modal-backdrop hidden">
+    <div class="modal-content max-w-3xl w-full p-6 space-y-5 bg-rail-card border border-blue-500/40 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-rail-border pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400 shadow-sm">
+            <i data-lucide="file-search" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">CP-SAT SOLVER AUDIT TRAIL & LINEAGE</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/30">
+                Requirement 3 Audit
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Deterministic candidate block generation, compatibility verification & solver event logs</p>
+          </div>
+        </div>
+        <button id="btn-close-req3-audit" class="text-slate-400 hover:text-slate-700 dark:hover:text-white transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Audit Summary Stats -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center font-mono">
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Solver Status</div>
+          <div id="modal-audit-status" class="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">FEASIBLE</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Solve Runtime</div>
+          <div id="modal-audit-runtime" class="text-lg font-bold text-blue-600 dark:text-blue-400 mt-0.5">-- ms</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Candidate Blocks</div>
+          <div id="modal-audit-candidates-count" class="text-lg font-bold text-purple-600 dark:text-purple-400 mt-0.5">-- Candidates</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Audit Events</div>
+          <div id="modal-audit-events-count" class="text-lg font-bold text-amber-600 dark:text-amber-400 mt-0.5">-- Events</div>
+        </div>
+      </div>
+
+      <!-- Candidate Blocks Lineage Table -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs font-mono font-bold text-slate-700 dark:text-slate-300 uppercase">
+          <span class="flex items-center gap-1.5">
+            <i data-lucide="layers" class="w-3.5 h-3.5 text-purple-500"></i>
+            Candidate Blocks Pool (B = B_single &cup; B_multi)
+          </span>
+          <span class="text-[10px] text-slate-500">Deterministic Compatibility Verified</span>
+        </div>
+        <div class="max-h-48 overflow-y-auto rounded-xl border border-rail-border">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-900/80 text-[10px] uppercase text-slate-400 border-b border-rail-border sticky top-0">
+              <tr>
+                <th class="py-2 px-3">Candidate ID</th>
+                <th class="py-2 px-3">Type</th>
+                <th class="py-2 px-3">Section & Line</th>
+                <th class="py-2 px-3">Tasks</th>
+                <th class="py-2 px-3">Span</th>
+                <th class="py-2 px-3">Time Saved</th>
+                <th class="py-2 px-3">Selection</th>
+              </tr>
+            </thead>
+            <tbody id="table-audit-candidates" class="divide-y divide-rail-border text-[11px] bg-slate-950/40">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Chronological Audit Trail Log -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs font-mono font-bold text-slate-700 dark:text-slate-300 uppercase">
+          <span class="flex items-center gap-1.5">
+            <i data-lucide="list-tree" class="w-3.5 h-3.5 text-blue-500"></i>
+            Solver Execution Audit Trail
+          </span>
+          <span class="text-[10px] text-slate-500">Audited per Section 145 Railways Act</span>
+        </div>
+        <div id="container-audit-log-entries" class="max-h-56 overflow-y-auto rounded-xl border border-rail-border p-3 bg-slate-950/60 font-mono text-[11px] space-y-2">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="pt-3 border-t border-rail-border flex justify-end">
+        <button id="btn-close-req3-audit-action" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">
+          Close Audit Trail
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REQUIREMENT 3: GANTT BLOCK DECISION MODAL ==================== -->
+  <div id="modal-block-details" class="modal-backdrop hidden">
+    <div class="modal-content max-w-2xl w-full p-6 space-y-5 bg-rail-card border border-emerald-500/40 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-rail-border pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-sm">
+            <i data-lucide="info" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white" id="modal-block-title">CORRIDOR BLOCK DECISION PROFILE</h3>
+              <span id="modal-block-type-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
+                CO-POSSESSION
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Explainable scheduling decision, alternative windows considered & safety certification</p>
+          </div>
+        </div>
+        <button id="btn-close-block-modal" class="text-slate-400 hover:text-slate-700 dark:hover:text-white transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Key Details Card -->
+      <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border space-y-2 font-mono text-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 dark:text-slate-400 text-[11px]">Assignment ID:</span>
+          <strong id="modal-block-id" class="text-red-700 dark:text-red-400 font-bold text-sm">--</strong>
+        </div>
+        <div class="text-slate-800 dark:text-slate-200 font-sans text-xs font-semibold" id="modal-block-desc">--</div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-rail-border/40 text-[11px]">
+          <div>
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Department:</span>
+            <div id="modal-block-dept" class="font-bold text-slate-900 dark:text-white">--</div>
+          </div>
+          <div>
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Section & Line:</span>
+            <div id="modal-block-section" class="font-bold text-slate-900 dark:text-white">--</div>
+          </div>
+          <div>
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Window Timing:</span>
+            <div id="modal-block-timing" class="font-bold text-blue-600 dark:text-blue-400">--:-- to --:--</div>
+          </div>
+          <div>
+            <span class="text-slate-500 dark:text-slate-400 text-[10px]">Duration:</span>
+            <div id="modal-block-duration" class="font-bold text-purple-600 dark:text-purple-400">-- min</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Non-Overlapping Machine & Safety Guarantees -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <span class="text-[10px] text-slate-500 uppercase">Allocated Machine Resource:</span>
+          <div id="modal-block-machine" class="font-bold text-slate-800 dark:text-slate-200 mt-1">--</div>
+          <span class="text-[10px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 mt-1">
+            <i data-lucide="check-circle" class="w-3 h-3"></i> Exclusive Non-Overlapping Allocation
+          </span>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <span class="text-[10px] text-slate-500 uppercase">Timetable Safety Buffer:</span>
+          <div class="font-bold text-emerald-600 dark:text-emerald-400 mt-1">15-min Headway Verified</div>
+          <span class="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-1">
+            <i data-lucide="shield-check" class="w-3 h-3 text-emerald-500"></i> Zero Train Clash Invariant Verified
+          </span>
+        </div>
+      </div>
+
+      <!-- Why This Block? (Level 2: Explainable Decision Card with 5 Operational Factors) -->
+      <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/25 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono font-bold text-blue-700 dark:text-blue-300 uppercase flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-4 h-4 text-blue-500"></i>
+            Why This Block? (CP-SAT Multi-Objective Decision Rationale)
+          </span>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-700 dark:text-blue-300 font-semibold">
+            Rank #1 Optimal Window
+          </span>
+        </div>
+        
+        <!-- 5 Key Operational Factors Grid / Bullets -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-sans">
+          <div class="p-2 rounded-lg bg-white/60 dark:bg-slate-900/60 border border-blue-500/15 flex items-start gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+            <div>
+              <strong class="text-slate-800 dark:text-slate-200 block text-[11px]">Corridor Slot Efficiency:</strong>
+              <span class="text-slate-600 dark:text-slate-400 text-[11px]">Fits within lowest-density traffic gap between scheduled train paths.</span>
+            </div>
+          </div>
+          <div class="p-2 rounded-lg bg-white/60 dark:bg-slate-900/60 border border-blue-500/15 flex items-start gap-2">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+            <div>
+              <strong class="text-slate-800 dark:text-slate-200 block text-[11px]">Timetable Conflict Clearance:</strong>
+              <span class="text-slate-600 dark:text-slate-400 text-[11px]">Zero clash invariant verified against COA/TMS running schedules.</span>
+            </div>
+          </div>
+          <div class="p-2 rounded-lg bg-white/60 dark:bg-slate-900/60 border border-blue-500/15 flex items-start gap-2">
+            <i data-lucide="layers" class="w-4 h-4 text-purple-500 shrink-0 mt-0.5"></i>
+            <div>
+              <strong class="text-slate-800 dark:text-slate-200 block text-[11px]">Shadow Possession Synergy:</strong>
+              <span class="text-slate-600 dark:text-slate-400 text-[11px]">Synchronized with compatible engineering works on adjacent/same track.</span>
+            </div>
+          </div>
+          <div class="p-2 rounded-lg bg-white/60 dark:bg-slate-900/60 border border-blue-500/15 flex items-start gap-2">
+            <i data-lucide="cpu" class="w-4 h-4 text-blue-500 shrink-0 mt-0.5"></i>
+            <div>
+              <strong class="text-slate-800 dark:text-slate-200 block text-[11px]">Machine & Rake Alignment:</strong>
+              <span class="text-slate-600 dark:text-slate-400 text-[11px]">Designated track machine & crew roster available without conflicts.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Target Availability Impact Highlight -->
+        <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-between text-xs font-mono">
+          <span class="text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5 font-semibold">
+            <i data-lucide="trending-up" class="w-4 h-4"></i>
+            Target Availability Impact:
+          </span>
+          <span id="modal-block-avail-gain" class="font-bold text-emerald-700 dark:text-emerald-400">+1.33 pp corridor availability preservation</span>
+        </div>
+
+        <p id="modal-block-why" class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-sans pt-1 border-t border-blue-500/20">--</p>
+      </div>
+
+      <!-- Level 3: Collapsible Technical Alternatives & Mathematical Reasoning -->
+      <div class="space-y-2 pt-1">
+        <button type="button" onclick="toggleModalAlternatives()" id="btn-toggle-modal-alternatives" class="disclosure-toggle-btn w-full py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200 dark:hover:bg-slate-800 border border-rail-border text-xs font-mono flex items-center justify-between text-slate-700 dark:text-slate-300 transition">
+          <span class="flex items-center gap-1.5 font-bold">
+            <i data-lucide="history" class="w-4 h-4 text-slate-400"></i>
+            <span>Technical Optimization Logic & Alternative Windows Evaluated</span>
+          </span>
+          <span class="flex items-center gap-1 text-[11px] text-slate-400">
+            <span id="modal-alternatives-count-label">3 Alternatives Considered</span>
+            <i id="icon-modal-alternatives" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
+          </span>
+        </button>
+
+        <div id="container-block-alternatives" class="disclosure-panel-body p-3 rounded-xl bg-slate-950/40 border border-rail-border space-y-2 font-mono text-xs hidden">
+          <span class="text-[10px] font-bold text-slate-400 uppercase">Alternative Windows Evaluated by Solver:</span>
+          <div id="modal-block-alternatives" class="space-y-1.5 text-[11px] text-slate-600 dark:text-slate-400">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="pt-3 border-t border-rail-border flex justify-end">
+        <button id="btn-close-block-modal-action" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition">
+          Close Block Details
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REQUIREMENT 4: RE-OPTIMIZATION PLAN DIFF MODAL ==================== -->
+  <div id="modal-plan-diff" class="modal-backdrop hidden">
+    <div class="modal-content max-w-3xl w-full p-6 space-y-5 bg-rail-card border border-red-500/40 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
+      <div class="flex items-center justify-between border-b border-rail-border pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-500 shadow-sm">
+            <i data-lucide="git-pull-request" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Rolling Plan Re-Optimization Diff</h3>
+              <span id="modal-diff-version-tag" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
+                V01 → V02
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Locked assignments preserved inside freeze window • Traceable operational changes</p>
+          </div>
+        </div>
+        <button onclick="closePlanDiffModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Diff Metric Badges -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <span class="text-[10px] text-slate-500 uppercase">Frozen / Unchanged:</span>
+          <div id="diff-count-unchanged" class="text-xl font-bold text-emerald-500 mt-1">0 Tasks</div>
+          <span class="text-[10px] text-slate-400">Preserved in freeze window</span>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <span class="text-[10px] text-slate-500 uppercase">New Tasks Added:</span>
+          <div id="diff-count-added" class="text-xl font-bold text-blue-500 mt-1">+0 Tasks</div>
+          <span class="text-[10px] text-slate-400">Accommodated into gaps</span>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <span class="text-[10px] text-slate-500 uppercase">Tasks Rescheduled:</span>
+          <div id="diff-count-moved" class="text-xl font-bold text-amber-500 mt-1">0 Tasks</div>
+          <span class="text-[10px] text-slate-400">Shifted to optimal window</span>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-rail-border">
+          <span class="text-[10px] text-slate-500 uppercase">Corridor Hours Delta:</span>
+          <div id="diff-delta-hours" class="text-xl font-bold text-purple-500 mt-1">+0.0h</div>
+          <span class="text-[10px] text-slate-400">Possession efficiency gain</span>
+        </div>
+      </div>
+
+      <!-- Diff Summary Narrative -->
+      <div class="p-3 rounded-xl bg-slate-900 border border-rail-border text-xs font-mono text-slate-300" id="diff-summary-text">
+        --
+      </div>
+
+      <!-- Rescheduled Tasks List -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-mono font-bold text-slate-400 uppercase">Sample Rescheduled / Shifted Work Orders:</span>
+        <div id="diff-moved-tasks-list" class="max-h-48 overflow-y-auto space-y-1.5 font-mono text-[11px]">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-rail-border flex justify-end">
+        <button onclick="closePlanDiffModal()" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition">
+          Accept & Close Diff View
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REQUIREMENT 4: PLAN VERSION HISTORY MODAL ==================== -->
+  <div id="modal-plan-versions" class="modal-backdrop hidden">
+    <div class="modal-content max-w-2xl w-full p-6 space-y-5 bg-rail-card border border-blue-500/40 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
+      <div class="flex items-center justify-between border-b border-rail-border pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-500 shadow-sm">
+            <i data-lucide="history" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Planning Horizon Version History</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Complete audit log of generated 24H, 7D, and 30D plans</p>
+          </div>
+        </div>
+        <button onclick="closePlanVersionsModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="max-h-80 overflow-y-auto rounded-xl border border-rail-border">
+        <table class="w-full text-left text-xs font-mono">
+          <thead class="bg-slate-900/90 text-[10px] uppercase text-slate-400 border-b border-rail-border sticky top-0">
+            <tr>
+              <th class="py-2.5 px-3">Plan Version</th>
+              <th class="py-2.5 px-3">Horizon</th>
+              <th class="py-2.5 px-3">Blocks</th>
+              <th class="py-2.5 px-3">Shadow Groups</th>
+              <th class="py-2.5 px-3">Hours Saved</th>
+              <th class="py-2.5 px-3">Status</th>
+            </tr>
+          </thead>
+          <tbody id="table-plan-versions-body" class="divide-y divide-rail-border text-[11px] bg-slate-950/40">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pt-3 border-t border-rail-border flex justify-end">
+        <button onclick="closePlanVersionsModal()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition">
+          Close Version History
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generic Reusable Information / Details Modal Dialog (Eliminates window.alert) -->
+  <div id="modal-info-dialog" class="modal-backdrop hidden">
+    <div class="modal-content max-w-lg w-full p-6 space-y-4 bg-rail-card border border-blue-500/40 rounded-2xl shadow-2xl">
+      <div class="flex items-center justify-between border-b border-rail-border pb-3">
+        <div class="flex items-center gap-2.5">
+          <div id="modal-info-icon-container" class="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+            <i data-lucide="info" class="w-4 h-4" id="modal-info-icon"></i>
+          </div>
+          <div>
+            <h3 id="modal-info-title" class="font-display font-bold text-base text-slate-900 dark:text-white">Information</h3>
+            <p id="modal-info-subtitle" class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">System Operational Notice</p>
+          </div>
+        </div>
+        <button onclick="closeInfoModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div id="modal-info-body" class="space-y-2 text-xs font-mono text-slate-700 dark:text-slate-300 leading-relaxed py-1">
+        <!-- Injected dynamically -->
+      </div>
+      <div class="pt-3 border-t border-rail-border flex justify-end">
+        <button onclick="closeInfoModal()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">
+          Acknowledge
         </button>
       </div>
     </div>

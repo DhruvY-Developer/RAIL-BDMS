@@ -1,0 +1,17 @@
+{
+  "name": "rail-bdms",
+  "version": "1.0.0",
+  "description": "Rail-BDMS | Integrated Rolling Block Demand Management System",
+  "scripts": {
+    "dev": "uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload",
+    "start": "uvicorn backend.app.main:app --host 0.0.0.0 --port 8000",
+    "test": "pytest"
+  },
+  "keywords": [
+    "rail-bdms",
+    "indian-railways",
+    "fastapi",
+    "optimization"
+  ],
+  "license": "ISC"
+}

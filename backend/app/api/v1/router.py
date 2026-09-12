@@ -13,13 +13,20 @@ from backend.app.schemas.schemas import (
     RawAssetDemand, IdentityResolutionResult, TimetableProtectionCertificate,
     DepartmentEnum, SafetyClassEnum, TaskStatusEnum, LineOrRoadEnum,
     LoginRequest, UserProfile, LoginResponse,
-    GisConfigResponse, LiveTrainPosition
+    GisConfigResponse, LiveTrainPosition,
+    HorizonTypeEnum, PlanStatusEnum, DataConfidenceEnum, PlanningHorizon
+)
+from backend.app.schemas.integration import (
+    UnifiedMaintenanceTask, COACorridorAvailability, IntegratedTimetablePath,
+    GoodsTrainForecast, IntegrationSourceStatus, DataQualityReport, TaskLineageRecord,
+    CrossSystemCorrelationScenario
 )
 from backend.app.services.ingestion.mock_data import (
     STATIONS, SECTIONS, generate_canonical_assets, generate_maintenance_tasks,
     generate_train_movements, generate_corridor_windows,
     generate_raw_demands_for_reconciliation
 )
+from backend.app.services.ingestion.unified_service import UnifiedDataIntegrationService
 from backend.app.services.identity.resolver import AssetIdentityResolver
 from backend.app.services.analytics.priority_engine import PriorityAnalyticsEngine
 from backend.app.services.optimizer.horizon_orchestrator import RollingHorizonOrchestrator
@@ -33,26 +40,67 @@ class DatabaseStore:
         self.stations = STATIONS
         self.sections = SECTIONS
         self.assets: List[CanonicalAsset] = generate_canonical_assets()
-        self.tasks: List[MaintenanceTask] = generate_maintenance_tasks(self.assets)
-        self.trains: List[TrainMovement] = generate_train_movements()
-        self.windows: List[CorridorWindow] = generate_corridor_windows()
         
-        self.identity_resolver = AssetIdentityResolver(self.assets)
-        self.priority_engine = PriorityAnalyticsEngine(self.assets)
+        # Initialize Unified Data Integration Layer (TMS + SMMS + TDMS + COA + Timetable + Goods Forecast)
+        self.integration_service = UnifiedDataIntegrationService(self.assets)
+        self.tasks: List[MaintenanceTask] = self.integration_service.tasks
+        self.trains: List[TrainMovement] = self.integration_service.trains
+        self.windows: List[CorridorWindow] = self.integration_service.windows
+        self.goods_forecasts: List[GoodsTrainForecast] = self.integration_service.goods_forecasts
+        
+        self.identity_resolver = self.integration_service.identity_resolver
+        self.priority_engine = PriorityAnalyticsEngine(
+            self.assets,
+            trains=self.trains,
+            goods_forecasts=self.goods_forecasts
+        )
         self.orchestrator = RollingHorizonOrchestrator(self.assets)
         self.compat_engine = ShadowBlockCompatibilityEngine(self.assets)
         
         # Initial evaluation of tasks
         self.tasks = self.priority_engine.batch_evaluate(self.tasks)
         
-        # Initial baseline plan
-        self.active_plan: OptimizationPlan = self.orchestrator.run_optimization(
-            horizon_type="WEEKLY",
+        # Initial multi-horizon plans: 24H Rolling, 7D Weekly, 30D Monthly
+        self.plan_24h: OptimizationPlan = self.orchestrator.run_optimization(
+            horizon_type="24H",
             tasks=self.tasks,
             trains=self.trains,
             windows=self.windows,
+            goods_forecasts=self.goods_forecasts,
             enforce_shadow_packing=True
         )
+        self.plan_7d: OptimizationPlan = self.orchestrator.run_optimization(
+            horizon_type="7D",
+            tasks=self.tasks,
+            trains=self.trains,
+            windows=self.windows,
+            goods_forecasts=self.goods_forecasts,
+            enforce_shadow_packing=True
+        )
+        self.plan_30d: OptimizationPlan = self.orchestrator.run_optimization(
+            horizon_type="30D",
+            tasks=self.tasks,
+            trains=self.trains,
+            windows=self.windows,
+            goods_forecasts=self.goods_forecasts,
+            enforce_shadow_packing=True
+        )
+        
+        self.active_horizon: str = "7D"
+        self.active_plan: OptimizationPlan = self.plan_7d
+        self.plans_by_horizon: Dict[str, OptimizationPlan] = {
+            "24H": self.plan_24h,
+            "7D": self.plan_7d,
+            "30D": self.plan_30d,
+            "DAILY": self.plan_24h,
+            "WEEKLY": self.plan_7d,
+            "MONTHLY": self.plan_30d,
+        }
+        self.plan_history: Dict[str, List[OptimizationPlan]] = {
+            "24H": [self.plan_24h],
+            "7D": [self.plan_7d],
+            "30D": [self.plan_30d]
+        }
         
         # Unresolved queue
         raw_demands = generate_raw_demands_for_reconciliation(self.assets)
@@ -304,9 +352,25 @@ def get_overview_kpis():
         "safety_critical_count": safety_critical_count,
         "reconciliation_pending_count": len(db.reconciliation_queue),
         "active_plan_id": plan.plan_id,
+        "active_horizon": db.active_horizon,
+        "plan_version": plan.plan_version,
+        "plan_status": plan.plan_status.value if hasattr(plan.plan_status, 'value') else str(plan.plan_status),
+        "plan_confidence": plan.plan_confidence.value if hasattr(plan.plan_confidence, 'value') else str(plan.plan_confidence),
+        "backlog_summary": plan.backlog_summary,
+        "horizon_comparison": plan.horizon_comparison,
         "certificate_id": plan.certificate.certificate_id if plan.certificate else None,
         "certificate_hash": plan.certificate.hash_sha256 if plan.certificate else None,
-        "system_status": "NORMAL - ALL HEADWAY ENVELOPES CERTIFIED"
+        "system_status": "NORMAL - ALL HEADWAY ENVELOPES CONSTRAINT VERIFIED",
+        "ml_intelligence": {
+            "status": "OPERATIONAL",
+            "model_name": db.priority_engine.inference_service.metadata.get("model_name", "RailRisk"),
+            "model_version": db.priority_engine.inference_service.metadata.get("model_version", "v1.0"),
+            "prediction_horizon": "7 Days",
+            "data_mode": "Synthetic prototype evaluation",
+            "critical_risk_tasks_count": len([t for t in db.tasks if (t.ai_risk_score or 0) >= 76.0]),
+            "high_ai_priority_count": len([t for t in db.tasks if (t.ai_priority_score or 0) >= 80.0]),
+            "safety_override_count": len([t for t in db.tasks if t.is_safety_override_applied])
+        }
     }
 
 # ----------------- 2. Assets & Reconciliation -----------------
@@ -417,17 +481,41 @@ def get_corridors():
 def run_solver(
     horizon: str = "WEEKLY",
     enforce_shadow_packing: bool = True,
-    timeout_seconds: int = 30
+    timeout_seconds: int = 30,
+    use_ai_priority: bool = False
 ):
+    solve_tasks = db.tasks
+    if use_ai_priority:
+        # Pass tasks with priority_score reflecting ai_priority_score to CP-SAT solver
+        solve_tasks = []
+        for t in db.tasks:
+            t_copy = t.model_copy()
+            if t_copy.ai_priority_score is not None:
+                t_copy.priority_score = t_copy.ai_priority_score
+            solve_tasks.append(t_copy)
+
     plan = db.orchestrator.run_optimization(
         horizon_type=horizon,
-        tasks=db.tasks,
+        tasks=solve_tasks,
         trains=db.trains,
         windows=db.windows,
+        goods_forecasts=db.goods_forecasts,
         enforce_shadow_packing=enforce_shadow_packing,
         timeout_seconds=timeout_seconds
     )
+    norm_key = horizon.upper()
+    if norm_key in ("DAILY", "24H"):
+        norm_key = "24H"
+    elif norm_key in ("MONTHLY", "30D"):
+        norm_key = "30D"
+    else:
+        norm_key = "7D"
+    db.active_horizon = norm_key
     db.active_plan = plan
+    db.plans_by_horizon[norm_key] = plan
+    if norm_key not in db.plan_history:
+        db.plan_history[norm_key] = []
+    db.plan_history[norm_key].append(plan)
     return plan
 
 @router.post("/optimizer/what-if")
@@ -451,6 +539,7 @@ def run_what_if_simulation(
         tasks=sub_tasks,
         trains=db.trains,
         windows=db.windows,
+        goods_forecasts=db.goods_forecasts,
         horizon_minutes=1440,
         enforce_shadow_packing=enforce_shadow_packing
     )
@@ -463,10 +552,50 @@ def run_what_if_simulation(
         "kpi_comparison": {
             "baseline_corridor_hours_saved": db.active_plan.kpis.get("corridor_hours_saved", 0),
             "simulated_corridor_hours_saved": plan.kpis.get("corridor_hours_saved", 0),
+            "baseline_asset_availability": db.active_plan.kpis.get("asset_availability_pct", 95.0),
+            "simulated_asset_availability": plan.kpis.get("asset_availability_pct", 95.0),
+            "baseline_downtime_avoided_hrs": db.active_plan.kpis.get("asset_downtime_avoided_hrs", 0),
+            "simulated_downtime_avoided_hrs": plan.kpis.get("asset_downtime_avoided_hrs", 0),
             "total_tasks_scheduled": len(plan.assignments),
             "shadow_groups_count": len(plan.shadow_groups),
+            "possessions_avoided": plan.kpis.get("separate_blocks_avoided", 0),
             "safety_verified": cert.verified_zero_clash
         }
+    }
+
+@router.get("/optimizer/comparison")
+def get_optimization_comparison():
+    """
+    Returns structured Before vs After Baseline Comparison Metrics (Requirement 3 Section 29):
+    Blocks, Corridor Occupation, Asset Downtime, Asset Availability %, Possessions Avoided.
+    """
+    return db.active_plan.comparison_metrics or {}
+
+@router.get("/optimizer/audit-trail")
+def get_optimization_audit_trail():
+    """
+    Returns full cryptographic & operational audit trail for the active optimization plan (Section 27).
+    """
+    return db.active_plan.audit_trail or {}
+
+@router.get("/optimizer/asset-availability")
+def get_asset_availability_metrics():
+    """
+    Returns mathematically derived corridor asset availability & downtime metrics (Section 8 & 9).
+    """
+    plan = db.active_plan
+    return {
+        "baseline_asset_availability_pct": plan.baseline_asset_availability_pct,
+        "optimized_asset_availability_pct": plan.asset_availability_pct,
+        "improvement_percentage_points": plan.asset_availability_improvement_pp,
+        "total_asset_downtime_min": plan.total_asset_downtime_min,
+        "baseline_asset_downtime_min": plan.baseline_asset_downtime_min,
+        "asset_downtime_saved_min": plan.asset_downtime_saved_min,
+        "corridor_hours_saved": plan.corridor_hours_saved,
+        "blocks_consolidated": plan.blocks_consolidated,
+        "possessions_avoided": plan.possessions_avoided,
+        "solver_status": plan.solver_status,
+        "solver_explanation": plan.solver_explanation
     }
 
 @router.get("/plans/latest", response_model=OptimizationPlan)
@@ -484,6 +613,179 @@ def approve_plan(plan_id: str, approver_name: str = Body("Sr. DOM / Delhi Divisi
 @router.get("/shadow-blocks", response_model=List[ShadowBlockGroup])
 def get_shadow_block_groups():
     return db.active_plan.shadow_groups
+
+# ----------------- Multi-Horizon Block Planning Endpoints (Requirement 4) -----------------
+@router.post("/plans/generate", response_model=OptimizationPlan)
+def generate_horizon_plan(
+    horizon_type: str = Body("7D", embed=True),
+    enforce_shadow_packing: bool = Body(True, embed=True),
+    timeout_seconds: int = Body(30, embed=True),
+    freeze_approved: bool = Body(False, embed=True)
+):
+    """
+    Generate or regenerate an optimization plan for a specific horizon (24H, 7D, 30D).
+    """
+    norm_key = horizon_type.upper()
+    if norm_key in ("DAILY", "24H"):
+        norm_key = "24H"
+    elif norm_key in ("MONTHLY", "30D"):
+        norm_key = "30D"
+    else:
+        norm_key = "7D"
+
+    prev_plan = db.plans_by_horizon.get(norm_key)
+    plan = db.orchestrator.run_optimization(
+        horizon_type=norm_key,
+        tasks=db.tasks,
+        trains=db.trains,
+        windows=db.windows,
+        goods_forecasts=db.goods_forecasts,
+        enforce_shadow_packing=enforce_shadow_packing,
+        timeout_seconds=timeout_seconds,
+        freeze_approved=freeze_approved,
+        previous_plan=prev_plan
+    )
+    db.active_horizon = norm_key
+    db.active_plan = plan
+    db.plans_by_horizon[norm_key] = plan
+    if norm_key not in db.plan_history:
+        db.plan_history[norm_key] = []
+    db.plan_history[norm_key].append(plan)
+    return plan
+
+@router.get("/plans/horizon/{horizon_type}", response_model=OptimizationPlan)
+def get_plan_by_horizon(horizon_type: str):
+    """
+    Retrieve the current plan for a given horizon: 24H, 7D, or 30D.
+    """
+    norm_key = horizon_type.upper()
+    if norm_key in ("DAILY", "24H"):
+        norm_key = "24H"
+    elif norm_key in ("MONTHLY", "30D"):
+        norm_key = "30D"
+    elif norm_key in ("WEEKLY", "7D"):
+        norm_key = "7D"
+    else:
+        raise HTTPException(status_code=400, detail=f"Invalid horizon type: {horizon_type}. Use 24H, 7D, or 30D.")
+
+    plan = db.plans_by_horizon.get(norm_key)
+    if not plan:
+        plan = db.orchestrator.run_optimization(
+            horizon_type=norm_key,
+            tasks=db.tasks,
+            trains=db.trains,
+            windows=db.windows,
+            goods_forecasts=db.goods_forecasts,
+            enforce_shadow_packing=True
+        )
+        db.plans_by_horizon[norm_key] = plan
+        db.plan_history[norm_key] = [plan]
+    
+    db.active_plan = plan
+    db.active_horizon = norm_key
+    return plan
+
+@router.get("/plans/versions")
+def get_plan_versions():
+    """
+    List all generated plan versions across horizons.
+    """
+    versions = []
+    for horizon, hist in db.plan_history.items():
+        for p in hist:
+            versions.append({
+                "plan_id": p.plan_id,
+                "plan_version": p.plan_version,
+                "horizon": horizon,
+                "generated_at": p.generated_at,
+                "assignments_count": len(p.assignments),
+                "shadow_groups_count": len(p.shadow_groups),
+                "plan_status": p.plan_status.value if hasattr(p.plan_status, 'value') else str(p.plan_status),
+                "plan_confidence": p.plan_confidence.value if hasattr(p.plan_confidence, 'value') else str(p.plan_confidence),
+                "corridor_hours_saved": p.corridor_hours_saved,
+                "asset_availability_pct": p.asset_availability_pct,
+                "approved_by": p.approved_by,
+                "is_active": (p.plan_id == db.active_plan.plan_id)
+            })
+    return versions
+
+@router.get("/plans/comparison-horizons")
+def get_horizon_comparison():
+    """
+    Returns side-by-side comparison matrix across 24H Rolling, 7D Weekly, and 30D Monthly horizons.
+    """
+    return db.active_plan.horizon_comparison or {
+        "horizons": ["24-Hour Rolling (24H)", "7-Day Weekly (7D)", "30-Day Monthly (30D)"],
+        "metrics": {
+            "tasks_scheduled": [len(db.plan_24h.assignments), len(db.plan_7d.assignments), len(db.plan_30d.assignments)],
+            "shadow_groups": [len(db.plan_24h.shadow_groups), len(db.plan_7d.shadow_groups), len(db.plan_30d.shadow_groups)],
+            "corridor_hours_saved": [db.plan_24h.corridor_hours_saved, db.plan_7d.corridor_hours_saved, db.plan_30d.corridor_hours_saved],
+            "asset_availability_pct": [db.plan_24h.asset_availability_pct, db.plan_7d.asset_availability_pct, db.plan_30d.asset_availability_pct],
+            "confidence": ["CONFIRMED", "HIGH", "PROVISIONAL"]
+        }
+    }
+
+@router.post("/plans/reoptimize", response_model=OptimizationPlan)
+def reoptimize_active_plan(
+    horizon_type: Optional[str] = Body(None, embed=True),
+    freeze_approved: bool = Body(True, embed=True)
+):
+    """
+    Execute rolling re-optimization against the active or specified horizon.
+    Preserves approved/locked blocks within the freeze window and computes plan diff.
+    """
+    target_horizon = horizon_type or db.active_horizon
+    norm_key = target_horizon.upper()
+    if norm_key in ("DAILY", "24H"):
+        norm_key = "24H"
+    elif norm_key in ("MONTHLY", "30D"):
+        norm_key = "30D"
+    else:
+        norm_key = "7D"
+
+    prev_plan = db.plans_by_horizon.get(norm_key, db.active_plan)
+    new_plan = db.orchestrator.run_optimization(
+        horizon_type=norm_key,
+        tasks=db.tasks,
+        trains=db.trains,
+        windows=db.windows,
+        goods_forecasts=db.goods_forecasts,
+        enforce_shadow_packing=True,
+        freeze_approved=freeze_approved,
+        previous_plan=prev_plan
+    )
+    db.active_horizon = norm_key
+    db.active_plan = new_plan
+    db.plans_by_horizon[norm_key] = new_plan
+    if norm_key not in db.plan_history:
+        db.plan_history[norm_key] = []
+    db.plan_history[norm_key].append(new_plan)
+    return new_plan
+
+@router.get("/plans/unscheduled-tasks")
+def get_unscheduled_tasks(horizon_type: Optional[str] = None):
+    """
+    Returns unscheduled/deferred tasks with root cause constraints and recommended actions.
+    """
+    target_horizon = horizon_type or db.active_horizon
+    norm_key = target_horizon.upper()
+    if norm_key in ("DAILY", "24H"):
+        norm_key = "24H"
+    elif norm_key in ("MONTHLY", "30D"):
+        norm_key = "30D"
+    else:
+        norm_key = "7D"
+
+    plan = db.plans_by_horizon.get(norm_key, db.active_plan)
+    return {
+        "horizon": norm_key,
+        "plan_version": plan.plan_version,
+        "unscheduled_count": len(plan.unscheduled_tasks),
+        "deferred_count": len(plan.deferred_tasks),
+        "unscheduled_tasks": plan.unscheduled_tasks,
+        "deferred_tasks": plan.deferred_tasks,
+        "backlog_summary": plan.backlog_summary
+    }
 
 # ----------------- 6. Field Execution & SSE Cockpit -----------------
 @router.get("/execution/blocks")
@@ -532,3 +834,201 @@ def transition_block_state(
         state["notes"].append(f"[{now_iso}] {notes}")
         
     return {"status": "SUCCESS", "assignment_id": assignment_id, "new_state": target_state}
+
+# ----------------- 7. Requirement 1: Unified Data Integration & Lineage -----------------
+@router.get("/integration/status", response_model=Dict[str, IntegrationSourceStatus])
+def get_integration_status():
+    """
+    Returns real-time operational status, connection mode (Simulated/Demo), record counts,
+    and sync timestamps across all 6 sources: TMS, SMMS, TDMS, COA, Timetable, Goods Forecast.
+    """
+    return db.integration_service.get_sources_status()
+
+@router.get("/integration/quality", response_model=DataQualityReport)
+def get_integration_quality():
+    """
+    Returns data quality, boundary validation checks, and health metrics across all integrated feeds.
+    """
+    return db.integration_service.get_data_quality_report()
+
+@router.get("/integration/goods-forecast", response_model=List[GoodsTrainForecast])
+def get_goods_forecast(corridor_id: Optional[str] = None):
+    """
+    Returns expected freight train traffic forecasts from Control Office / FOIS.
+    """
+    fcsts = db.goods_forecasts
+    if corridor_id:
+        fcsts = [f for f in fcsts if f.corridor_id == corridor_id or f.section_id == corridor_id]
+    return fcsts
+
+@router.get("/integration/lineage/{task_id}", response_model=TaskLineageRecord)
+def get_task_lineage(task_id: str):
+    """
+    Returns 6-way cross-source operational provenance trace for a maintenance task:
+    TMS/SMMS/TDMS Work Order -> Asset ID -> COA Window -> Timetable Headway -> Goods Forecast.
+    """
+    lineage = db.integration_service.get_task_lineage(task_id)
+    if not lineage:
+        raise HTTPException(status_code=404, detail=f"Task '{task_id}' not found for lineage extraction")
+    return lineage
+
+@router.get("/integration/correlation-scenario", response_model=CrossSystemCorrelationScenario)
+def get_correlation_scenario():
+    """
+    Returns the 6-way cross-system operational convergence scenario
+    demonstrating TMS + SMMS + TDMS + COA + Timetable + Goods Forecast integration
+    on the same corridor/section and window (TKD–FDB DOWN Line, 00:30–04:30).
+    """
+    return db.integration_service.get_correlation_scenario()
+
+@router.post("/integration/sync")
+def trigger_integration_sync():
+    """
+    Forces immediate re-synchronization across all 6 source adapters.
+    """
+    db.integration_service.sync_all()
+    db.tasks = db.priority_engine.batch_evaluate(db.integration_service.tasks)
+    db.trains = db.integration_service.trains
+    db.windows = db.integration_service.windows
+    db.goods_forecasts = db.integration_service.goods_forecasts
+    db.plan_24h = db.orchestrator.run_optimization("24H", tasks=db.tasks, trains=db.trains, windows=db.windows, goods_forecasts=db.goods_forecasts)
+    db.plan_7d = db.orchestrator.run_optimization("7D", tasks=db.tasks, trains=db.trains, windows=db.windows, goods_forecasts=db.goods_forecasts)
+    db.plan_30d = db.orchestrator.run_optimization("30D", tasks=db.tasks, trains=db.trains, windows=db.windows, goods_forecasts=db.goods_forecasts)
+    db.active_plan = db.plan_7d
+    db.plans_by_horizon["24H"] = db.plan_24h
+    db.plans_by_horizon["7D"] = db.plan_7d
+    db.plans_by_horizon["30D"] = db.plan_30d
+    db.plans_by_horizon["DAILY"] = db.plan_24h
+    db.plans_by_horizon["WEEKLY"] = db.plan_7d
+    db.plans_by_horizon["MONTHLY"] = db.plan_30d
+    return {
+        "status": "SUCCESS",
+        "message": "All 6 operational source adapters successfully re-synchronized.",
+        "timestamp": db.integration_service.last_sync_timestamp,
+        "record_counts": {k: v.total_records for k, v in db.integration_service.get_sources_status().items()}
+    }
+
+# ----------------- 8. Requirement 2: AI/ML Maintenance Risk & Priority Engine -----------------
+@router.get("/ml/metadata")
+def get_ml_metadata():
+    """
+    Returns verified model version, training metrics (F1, ROC-AUC), feature set,
+    chronological split details, and honest synthetic prototype data labeling.
+    """
+    meta = db.priority_engine.inference_service.get_metadata()
+    return {
+        "status": "OPERATIONAL",
+        "model_name": meta.get("model_name", "RailRisk"),
+        "model_version": meta.get("model_version", "v1.0"),
+        "model_type": meta.get("model_type", "RandomForestClassifier (Calibrated Ensemble)"),
+        "training_date": meta.get("training_date"),
+        "prediction_horizon": meta.get("prediction_horizon", "7 Days"),
+        "target_definition": meta.get("target_definition", "Probability of critical failure or severe operational disruption within 7 days"),
+        "feature_set": meta.get("feature_set", "FS-01 (17 Domain Features)"),
+        "data_mode": meta.get("data_mode", "Prototype ML Model — Synthetic Training Data"),
+        "data_mode_label": "Synthetic prototype evaluation",
+        "split_strategy": meta.get("split_strategy", "Chronological (Older 75% Train, Newer 25% Test - Zero Leakage)"),
+        "total_samples": meta.get("total_samples", 1200),
+        "train_samples": meta.get("train_samples", 900),
+        "test_samples": meta.get("test_samples", 300),
+        "metrics": meta.get("metrics", {}),
+        "feature_importances": meta.get("feature_importances", {}),
+        "risk_thresholds": meta.get("risk_thresholds", {
+            "LOW": [0.0, 25.0],
+            "MODERATE": [26.0, 50.0],
+            "HIGH": [51.0, 75.0],
+            "CRITICAL": [76.0, 100.0]
+        })
+    }
+
+@router.get("/ml/prioritized-tasks", response_model=List[MaintenanceTask])
+def get_ml_prioritized_tasks(
+    department: Optional[DepartmentEnum] = None,
+    safety_class: Optional[SafetyClassEnum] = None,
+    min_ai_priority: Optional[float] = None
+):
+    """
+    Returns maintenance tasks ranked by genuine AI-Assisted Priority Score,
+    preserving both deterministic and AI scores side-by-side.
+    """
+    tasks = db.tasks
+    if department:
+        tasks = [t for t in tasks if t.department == department]
+    if safety_class:
+        tasks = [t for t in tasks if t.safety_class == safety_class]
+    if min_ai_priority is not None:
+        tasks = [t for t in tasks if (t.ai_priority_score or 0.0) >= min_ai_priority]
+    return sorted(tasks, key=lambda x: x.ai_priority_score or 0.0, reverse=True)
+
+@router.get("/ml/explain/{task_id}")
+def get_task_ml_explanation(task_id: str):
+    """
+    Returns transparent, explainable AI recommendation breakdown for a specific maintenance task:
+    Risk Probability, AI Priority, Risk Class, 7-Day Horizon, Top Contributing Factors,
+    Availability Impact, Traffic Exposure, and Safety Override status.
+    """
+    task = next((t for t in db.tasks if t.task_id == task_id or t.source_task_id == task_id), None)
+    if not task:
+        raise HTTPException(status_code=404, detail=f"Task '{task_id}' not found")
+    
+    asset = next((a for a in db.assets if a.asset_id == task.asset_id), None)
+    
+    return {
+        "task_id": task.task_id,
+        "source_task_id": task.source_task_id,
+        "description": task.description,
+        "department": task.department.value if hasattr(task.department, "value") else str(task.department),
+        "section_id": asset.section_id if asset else "TKD-FDB",
+        "line_or_road": asset.line_or_road.value if asset and hasattr(asset.line_or_road, "value") else "DOWN",
+        "deterministic_score": task.priority_score,
+        "criticality_score": task.criticality_score,
+        "urgency_score": task.urgency_score,
+        "ai_risk_score": task.ai_risk_score,
+        "ai_risk_class": task.ai_risk_class,
+        "ai_priority_score": task.ai_priority_score,
+        "ai_confidence_level": task.ai_confidence_level,
+        "availability_impact_score": task.availability_impact_score,
+        "traffic_exposure_score": task.traffic_exposure_score,
+        "prediction_horizon": "7 Days",
+        "top_contributing_factors": task.ai_contributing_factors or [],
+        "ai_explanation": task.ai_explanation or "Routine maintenance parameters",
+        "is_safety_override_applied": task.is_safety_override_applied,
+        "is_cold_start": task.is_cold_start,
+        "model_version": task.model_version or "RailRisk v1.0",
+        "data_mode_label": "Synthetic prototype evaluation"
+    }
+
+@router.get("/ml/demo-scenario")
+def get_ml_demo_scenario():
+    """
+    Returns the required 3-task demonstration scenario (Section 29 of prompt):
+    Task A (Critical, ~91-96%), Task B (Moderate, ~44-57%), Task C (Routine, ~4-18%)
+    generated dynamically via the calibrated ML model pipeline.
+    """
+    return db.priority_engine.inference_service.get_demo_scenario()
+
+@router.get("/ml/monitoring")
+def get_ml_monitoring_stats():
+    """
+    Returns lightweight ML operational monitoring statistics and distribution benchmarks.
+    """
+    return db.priority_engine.inference_service.get_monitoring_stats()
+
+@router.post("/ml/retrain")
+def retrain_ml_model():
+    """
+    Triggers offline model retraining with chronological splitting, updates the serialized artifact,
+    reloads inference engine, and re-evaluates all active maintenance tasks.
+    """
+    from backend.app.services.ml.training_pipeline import train_and_evaluate_model
+    meta = train_and_evaluate_model()
+    db.priority_engine.inference_service.reload()
+    db.tasks = db.priority_engine.batch_evaluate(db.tasks)
+    return {
+        "status": "SUCCESS",
+        "message": "RailRisk model retraining completed successfully with chronological train/test split.",
+        "training_date": meta.get("training_date"),
+        "metrics": meta.get("metrics"),
+        "total_tasks_reevaluated": len(db.tasks)
+    }
+

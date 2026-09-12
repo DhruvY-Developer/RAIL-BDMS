@@ -73,7 +73,7 @@ async def websocket_live_cockpit(websocket: WebSocket):
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "active_blocks_count": len(db.execution_states),
             "total_trains_monitored": len(db.trains),
-            "safety_invariant": "GUARANTEED_ZERO_CLASH"
+            "safety_invariant": "ZERO_CLASH_VERIFIED"
         }))
         
         sim_minute = 400 # 06:40 AM
@@ -125,6 +125,19 @@ FRONTEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../fr
 
 if os.path.exists(FRONTEND_DIR):
     app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
+
+@app.get("/health")
+@app.get("/healthz")
+def health_check():
+    """
+    Lightweight health check endpoint for Render, container orchestrators, and load balancers.
+    """
+    return {
+        "status": "healthy",
+        "service": settings.PROJECT_NAME,
+        "version": settings.VERSION,
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
 
 @app.get("/")
 def serve_root():

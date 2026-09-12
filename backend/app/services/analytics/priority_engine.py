@@ -5,12 +5,34 @@ from typing import List, Dict, Optional
 from datetime import datetime, timezone
 from backend.app.schemas.schemas import (
     MaintenanceTask, CanonicalAsset, SafetyClassEnum, DepartmentEnum,
-    MachineTypeEnum
+    MachineTypeEnum, TrainMovement
 )
+from backend.app.schemas.integration import GoodsTrainForecast
+from backend.app.services.ml.inference_service import InferenceService
 
 class PriorityAnalyticsEngine:
-    def __init__(self, canonical_assets: List[CanonicalAsset]):
+    def __init__(
+        self,
+        canonical_assets: List[CanonicalAsset],
+        trains: Optional[List[TrainMovement]] = None,
+        goods_forecasts: Optional[List[GoodsTrainForecast]] = None
+    ):
+        self.canonical_assets = canonical_assets
         self.asset_lookup: Dict[str, CanonicalAsset] = {a.asset_id: a for a in canonical_assets}
+        self.trains = trains or []
+        self.goods_forecasts = goods_forecasts or []
+        self.inference_service = InferenceService(canonical_assets)
+
+    def set_operational_context(
+        self,
+        trains: Optional[List[TrainMovement]] = None,
+        goods_forecasts: Optional[List[GoodsTrainForecast]] = None
+    ):
+        """Sets operational context feeds (WTT Timetable and FOIS Goods Forecast)."""
+        if trains is not None:
+            self.trains = trains
+        if goods_forecasts is not None:
+            self.goods_forecasts = goods_forecasts
 
     def compute_criticality(self, task: MaintenanceTask, asset: Optional[CanonicalAsset]) -> float:
         """
@@ -160,12 +182,14 @@ class PriorityAnalyticsEngine:
     def evaluate_task(self, task: MaintenanceTask, all_tasks: List[MaintenanceTask]) -> MaintenanceTask:
         """
         Evaluates and enriches a single maintenance task with composite priority score and analytics.
+        Strictly preserves the existing deterministic priority formula while adding isolated AI/ML scores.
         """
         asset = self.asset_lookup.get(task.asset_id)
         crit = self.compute_criticality(task, asset)
         urg = self.compute_urgency(task)
         shadow = self.compute_shadow_opportunity(task, all_tasks)
         
+        # 1. Existing Deterministic Score (PRESERVED 100% UNCHANGED)
         composite_priority = round(0.55 * crit + 0.35 * urg + 0.10 * shadow, 2)
         explanation = self.generate_explanation(task, asset, composite_priority, crit, urg, shadow)
         
@@ -181,7 +205,16 @@ class PriorityAnalyticsEngine:
         task.predicted_p95_duration_min = analytics["p95"]
         task.overrun_risk_score = analytics["overrun_risk_score"]
         
+        # 2. Genuine AI/ML Risk, Availability Impact, and Priority Layer (Requirement 2)
+        task = self.inference_service.evaluate_and_enrich_task(
+            task=task,
+            trains=self.trains,
+            goods_forecasts=self.goods_forecasts,
+            all_tasks=all_tasks
+        )
+        
         return task
 
     def batch_evaluate(self, tasks: List[MaintenanceTask]) -> List[MaintenanceTask]:
         return [self.evaluate_task(t, tasks) for t in tasks]
+

@@ -66,3 +66,9 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# Temporary scratch and local verification scripts
+scratch/
+.system_verify_ui.mjs
+*.mjs
+

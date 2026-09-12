@@ -89,9 +89,9 @@ class TimetableProtectionCertifier:
         policy_hash = hashlib.sha256(b"IR-SAFETY-POLICY-2026-ZERO-CLASH-HEADWAY-15M").hexdigest()[:16]
 
         explanation = (
-            f"Timetable Protection Certified: Verified 0 train clashes across {len(plan.assignments)} "
+            f"Timetable Protection Verification: Verified 0 train clashes across {len(plan.assignments)} "
             f"maintenance blocks against {len(trains)} scheduled train paths in {timetable_version}. "
-            f"Safety buffers (B_before={self.headway_before_min}m, B_after={self.headway_after_min}m) mathematically guaranteed."
+            f"Safety buffers (B_before={self.headway_before_min}m, B_after={self.headway_after_min}m) verified against configured constraints."
         )
 
         certificate = TimetableProtectionCertificate(

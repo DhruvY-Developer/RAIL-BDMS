@@ -1,0 +1,78 @@
+{
+  "model_name": "RailRisk",
+  "model_version": "v1.0",
+  "model_type": "RandomForestClassifier (Calibrated Ensemble)",
+  "training_date": "2026-09-12T03:39:50.167765+00:00",
+  "prediction_horizon": "7 Days",
+  "target_definition": "Probability of critical failure or severe operational disruption within 7 days",
+  "feature_set": "FS-01 (17 Domain Features)",
+  "feature_names": [
+    "asset_type_enc",
+    "department_enc",
+    "route_class_enc",
+    "criticality_class_enc",
+    "defect_severity_score",
+    "days_overdue",
+    "days_until_due",
+    "estimated_duration_min",
+    "passenger_train_density",
+    "goods_train_density",
+    "total_traffic_exposure",
+    "asset_availability_impact",
+    "historical_maintenance_count",
+    "historical_failure_count",
+    "requires_ohe_isolation",
+    "requires_signal_disconnection",
+    "shadow_block_potential"
+  ],
+  "data_mode": "Prototype ML Model \u2014 Synthetic Training Data",
+  "data_mode_label": "PROTOTYPE / SYNTHETIC HISTORICAL DATASET (Honest Labeling)",
+  "split_strategy": "Chronological (Older 75% Train, Newer 25% Test - Zero Leakage)",
+  "total_samples": 1200,
+  "train_samples": 900,
+  "test_samples": 300,
+  "metrics": {
+    "precision": 0.7926,
+    "recall": 0.8492,
+    "f1_score": 0.8199,
+    "roc_auc": 0.9133,
+    "accuracy": 0.8433
+  },
+  "feature_importances": {
+    "defect_severity_score": 0.2775,
+    "historical_failure_count": 0.1662,
+    "asset_availability_impact": 0.133,
+    "days_overdue": 0.1299,
+    "passenger_train_density": 0.0604,
+    "days_until_due": 0.0587,
+    "total_traffic_exposure": 0.0586,
+    "criticality_class_enc": 0.0252,
+    "goods_train_density": 0.0252,
+    "historical_maintenance_count": 0.0136,
+    "asset_type_enc": 0.0121,
+    "estimated_duration_min": 0.0112,
+    "shadow_block_potential": 0.0081,
+    "department_enc": 0.007,
+    "route_class_enc": 0.0058,
+    "requires_ohe_isolation": 0.0041,
+    "requires_signal_disconnection": 0.0033
+  },
+  "risk_thresholds": {
+    "LOW": [
+      0.0,
+      0.25
+    ],
+    "MODERATE": [
+      0.26,
+      0.5
+    ],
+    "HIGH": [
+      0.51,
+      0.75
+    ],
+    "CRITICAL": [
+      0.76,
+      1.0
+    ]
+  }
+}
